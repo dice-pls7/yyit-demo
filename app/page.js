@@ -1,5 +1,6 @@
 import Header from '../components/Header';
 import Hero from '../components/Hero';
+import SecurityRealitySection from '../components/SecurityRealitySection';
 import Pricing from '../components/Pricing';
 import ComparisonTable from '../components/ComparisonTable';
 import Solutions from '../components/Solutions';
@@ -13,6 +14,7 @@ export default function Home() {
     <main className="min-h-screen bg-slate-950">
       <Header />
       <Hero />
+      <SecurityRealitySection />
       <Pricing />
       <ComparisonTable />
       <Solutions />
