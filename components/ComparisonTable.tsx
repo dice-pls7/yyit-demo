@@ -60,18 +60,18 @@ export default function ComparisonTable() {
                 <div className="text-slate-400 font-semibold text-sm">Functie</div>
                 <div className="text-center">
                   <div className="text-white font-bold">Starter</div>
-                  <div className="text-cyan-400 text-sm mt-1">€12,45/mnd</div>
+                  <div className="text-cyan-400 text-sm mt-1">€12,50/mnd</div>
                 </div>
                 <div className="text-center relative">
-                  <div className="absolute -top-3 left-1/2 -translate-x-1/2 px-3 py-1 bg-gradient-to-r from-cyan-500 to-blue-600 rounded-full text-xs font-semibold text-white whitespace-nowrap">
+                  <div className="absolute -bottom-9 left-1/2 -translate-x-1/2 px-3 py-1 bg-gradient-to-r from-cyan-500 to-blue-600 rounded-full text-xs font-semibold text-white whitespace-nowrap">
                     Meestgekozen
                   </div>
                   <div className="text-white font-bold">Compleet</div>
-                  <div className="text-cyan-400 text-sm mt-1">€37,50/mnd</div>
+                  <div className="text-cyan-400 text-sm mt-1">€37/mnd</div>
                 </div>
                 <div className="text-center">
                   <div className="text-white font-bold">Premium</div>
-                  <div className="text-cyan-400 text-sm mt-1">€50/mnd</div>
+                  <div className="text-cyan-400 text-sm mt-1">€49/mnd</div>
                 </div>
               </div>
 

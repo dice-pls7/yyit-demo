@@ -2,7 +2,7 @@ export default function Pricing() {
   const plans = [
     {
       name: 'Starter',
-      price: '12,45',
+      price: '12.50',
       badge: 'Beste keus voor ZZP\'ers',
       description: 'Perfect voor zelfstandigen die betrouwbare IT-ondersteuning nodig hebben',
       features: [
@@ -16,7 +16,7 @@ export default function Pricing() {
     },
     {
       name: 'Compleet',
-      price: '37,50',
+      price: '37',
       badge: 'Meestgekozen',
       description: 'Ideaal voor kleine teams die complete IT-beveiliging willen',
       features: [
@@ -30,7 +30,7 @@ export default function Pricing() {
     },
     {
       name: 'Premium',
-      price: '50',
+      price: '49',
       badge: 'Geschikt voor grote organisaties',
       description: 'Enterprise-grade beveiliging voor groeiende bedrijven',
       features: [

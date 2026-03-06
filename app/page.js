@@ -15,9 +15,9 @@ export default function Home() {
       <Header />
       <Hero />
       <SecurityRealitySection />
-      <Pricing />
-      <ComparisonTable />
       <Solutions />
+      <Pricing />
+      <ComparisonTable />      
       <About />
       <Partners />
       <CTA />
