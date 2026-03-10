@@ -15,7 +15,7 @@ export default function Header() {
             <a href="#" className="flex items-center gap-2 group">
               <div className="w-10 h-10 rounded-lg overflow-hidden transform group-hover:scale-110 transition-transform duration-300">
                 <Image
-                  src="/FavIcon.svg"
+                  src="/favicon.svg"
                   alt="YYIT logo"
                   width={40}
                   height={40}
