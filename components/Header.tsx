@@ -1,5 +1,6 @@
 'use client';
 
+import Image from 'next/image';
 import { useState } from 'react';
 
 export default function Header() {
@@ -12,10 +13,14 @@ export default function Header() {
           {/* Logo */}
           <div className="flex items-center">
             <a href="#" className="flex items-center gap-2 group">
-              <div className="w-10 h-10 bg-gradient-to-br from-cyan-400 to-blue-600 rounded-lg flex items-center justify-center transform group-hover:scale-110 transition-transform duration-300">
-                <svg className="w-6 h-6 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 3v2m6-2v2M9 19v2m6-2v2M5 9H3m2 6H3m18-6h-2m2 6h-2M7 19h10a2 2 0 002-2V7a2 2 0 00-2-2H7a2 2 0 00-2 2v10a2 2 0 002 2zM9 9h6v6H9V9z" />
-                </svg>
+              <div className="w-10 h-10 rounded-lg overflow-hidden transform group-hover:scale-110 transition-transform duration-300">
+                <Image
+                  src="/FavIcon.svg"
+                  alt="YYIT logo"
+                  width={40}
+                  height={40}
+                  className="w-full h-full object-cover"
+                />
               </div>
               <span className="text-xl font-bold text-white tracking-tight">YYIT</span>
             </a>
