@@ -12,43 +12,43 @@ export default function Hero() {
       <div className="relative z-10 mx-auto max-w-7xl px-6 lg:px-8 py-20">
         <div className="text-center space-y-8 animate-fadeInUp">
           {/* Badge */}
-          <div className="inline-flex items-center gap-2 px-4 py-2 bg-cyan-500/10 border border-cyan-500/20 rounded-full backdrop-blur-sm">
+          {/* <div className="inline-flex items-center gap-2 px-4 py-2 bg-cyan-500/10 border border-cyan-500/20 rounded-full backdrop-blur-sm">
             <span className="w-2 h-2 bg-cyan-400 rounded-full animate-pulse"></span>
             <span className="text-cyan-300 text-sm font-medium">Professionele IT-ondersteuning</span>
-          </div>
+          </div> */}
 
           {/* Main Headline */}
           <h1 className="text-5xl md:text-7xl lg:text-8xl font-bold tracking-tight text-white max-w-5xl mx-auto leading-tight">
-            Snelle, betrouwbare{' '}
+            IT-beheer voor bedrijven{' '}
             <span className="bg-gradient-to-r from-cyan-400 via-blue-500 to-cyan-400 bg-clip-text text-transparent animate-gradient">
-              IT-ondersteuning
+               die geen gedoe willen {' '}
             </span>
-            , altijd en overal
+              met beveiliging.
+            
           </h1>
 
           {/* Subtext */}
           <p className="text-xl md:text-2xl text-slate-400 max-w-3xl mx-auto leading-relaxed">
-            We zijn gespecialiseerd in het leveren van IT beheerpakketten op maat, 
-            die ervoor zorgen dat jouw systemen veilig en efficiënt werken.
+            Wij beheren je werkplekken, updates, back-ups en beveiliging. Jij werkt door.
           </p>
 
           {/* CTA Buttons */}
           <div className="flex flex-col sm:flex-row items-center justify-center gap-4 pt-8">
             <a
               href="#pricing"
-              className="group animate-cta-pulse px-8 py-4 bg-gradient-to-r from-rose-500 to-red-600 text-white rounded-xl font-semibold text-lg hover:from-rose-400 hover:to-red-500 transition-all duration-300 shadow-2xl shadow-rose-500/30 hover:shadow-rose-500/50 hover:scale-105 flex items-center gap-2"
+              className="group animate-cta-pulse px-8 py-4 bg-gradient-to-r from-cyan-400 via-blue-500 to-cyan-400 text-white rounded-xl font-semibold text-lg hover:from-cyan-400 hover:to-blue-500 transition-all duration-300 shadow-2xl shadow-cyan-500/30 hover:shadow-cyan-500/50 hover:scale-105 flex items-center gap-2"
             >
               Ontdek onze pakketten
               <svg className="w-5 h-5 group-hover:translate-x-1 transition-transform" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 7l5 5m0 0l-5 5m5-5H6" />
               </svg>
             </a>
-            <a
+            {/* <a
               href="#cta"
               className="px-8 py-4 bg-slate-800/50 backdrop-blur-sm text-white border-2 border-slate-700 hover:border-cyan-500/50 rounded-xl font-semibold text-lg transition-all duration-300 hover:bg-slate-800/80"
             >
               Adviesgesprek aanvragen
-            </a>
+            </a> */}
           </div>
 
           {/* Trust Indicators */}
