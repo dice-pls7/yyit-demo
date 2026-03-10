@@ -10,16 +10,16 @@ export default function Solutions() {
       description: 'Bescherm je bedrijf tegen moderne cyberdreigingen met proactieve monitoring, endpoint protection en geavanceerde threat detection.',
       features: ['Real-time monitoring', 'EDR beveiliging', 'Security audits']
     },
-    {
-      icon: (
-        <svg className="w-8 h-8" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M3 15a4 4 0 004 4h9a5 5 0 10-.1-9.999 5.002 5.002 0 10-9.78 2.096A4.001 4.001 0 003 15z" />
-        </svg>
-      ),
-      title: 'Cloud Infrastructure',
-      description: 'Migreer naar de cloud met vertrouwen. We beheren je cloud-infrastructuur, zorgen voor optimale prestaties en kostenefficiëntie.',
-      features: ['Cloud migratie', 'Infrastructure as Code', '24/7 monitoring']
-    },
+    // {
+    //   icon: (
+    //     <svg className="w-8 h-8" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+    //       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M3 15a4 4 0 004 4h9a5 5 0 10-.1-9.999 5.002 5.002 0 10-9.78 2.096A4.001 4.001 0 003 15z" />
+    //     </svg>
+    //   ),
+    //   title: 'Cloud Infrastructure',
+    //   description: 'Migreer naar de cloud met vertrouwen. We beheren je cloud-infrastructuur, zorgen voor optimale prestaties en kostenefficiëntie.',
+    //   features: ['Cloud migratie', 'Infrastructure as Code', '24/7 monitoring']
+    // },
     {
       icon: (
         <svg className="w-8 h-8" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -30,16 +30,16 @@ export default function Solutions() {
       description: 'Verlies nooit meer kritische data. Automatische back-ups, snelle recovery en compliance met internationale standaarden.',
       features: ['Automatische back-ups', 'Disaster recovery', 'Compliance reports']
     },
-    {
-      icon: (
-        <svg className="w-8 h-8" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M12 6V4m0 2a2 2 0 100 4m0-4a2 2 0 110 4m-6 8a2 2 0 100-4m0 4a2 2 0 110-4m0 4v2m0-6V4m6 6v10m6-2a2 2 0 100-4m0 4a2 2 0 110-4m0 4v2m0-6V4" />
-        </svg>
-      ),
-      title: 'IT Asset Management',
-      description: 'Beheer al je IT-assets centraal. Van hardware tot software licenties, volledig inzicht en controle over je IT-middelen.',
-      features: ['Asset tracking', 'License management', 'Lifecycle beheer']
-    },
+    // {
+    //   icon: (
+    //     <svg className="w-8 h-8" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+    //       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M12 6V4m0 2a2 2 0 100 4m0-4a2 2 0 110 4m-6 8a2 2 0 100-4m0 4a2 2 0 110-4m0 4v2m0-6V4m6 6v10m6-2a2 2 0 100-4m0 4a2 2 0 110-4m0 4v2m0-6V4" />
+    //     </svg>
+    //   ),
+    //   title: 'IT Asset Management',
+    //   description: 'Beheer al je IT-assets centraal. Van hardware tot software licenties, volledig inzicht en controle over je IT-middelen.',
+    //   features: ['Asset tracking', 'License management', 'Lifecycle beheer']
+    // },
     {
       icon: (
         <svg className="w-8 h-8" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -50,16 +50,16 @@ export default function Solutions() {
       description: 'Directe ondersteuning wanneer je het nodig hebt. Ons team staat klaar om al je IT-vragen en -problemen snel op te lossen.',
       features: ['Multi-channel support', 'SLA garanties', 'Kennisbank toegang']
     },
-    {
-      icon: (
-        <svg className="w-8 h-8" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z" />
-        </svg>
-      ),
-      title: 'Performance Monitoring',
-      description: 'Houd de prestaties van je systemen in de gaten. Proactieve alerting en gedetailleerde rapportages voor optimale uptime.',
-      features: ['Real-time dashboards', 'Custom alerts', 'Performance analytics']
-    },
+    // {
+    //   icon: (
+    //     <svg className="w-8 h-8" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+    //       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z" />
+    //     </svg>
+    //   ),
+    //   title: 'Performance Monitoring',
+    //   description: 'Houd de prestaties van je systemen in de gaten. Proactieve alerting en gedetailleerde rapportages voor optimale uptime.',
+    //   features: ['Real-time dashboards', 'Custom alerts', 'Performance analytics']
+    // },
   ];
 
   return (
@@ -73,13 +73,14 @@ export default function Solutions() {
         {/* Section Header */}
         <div className="text-center space-y-4 mb-20 animate-fadeInUp">
           <h2 className="text-4xl md:text-5xl lg:text-6xl font-bold text-white tracking-tight">
-            Onze{' '}
+            Jij de{' '}
             <span className="bg-gradient-to-r from-cyan-400 to-blue-500 bg-clip-text text-transparent">
-              oplossingen
+              Rust. {' '}
             </span>
+             Wij de lasten.
           </h2>
           <p className="text-xl text-slate-400 max-w-3xl mx-auto">
-            Complete IT-beheeroplossingen die jouw bedrijf naar een hoger niveau tillen
+            IT-oplossingen die jouw zorgen wegnemen
           </p>
         </div>
 
