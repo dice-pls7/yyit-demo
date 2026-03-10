@@ -36,7 +36,7 @@ export default function Hero() {
           <div className="flex flex-col sm:flex-row items-center justify-center gap-4 pt-8">
             <a
               href="#pricing"
-              className="group px-8 py-4 bg-gradient-to-r from-cyan-500 to-blue-600 text-white rounded-xl font-semibold text-lg hover:from-cyan-400 hover:to-blue-500 transition-all duration-300 shadow-2xl shadow-cyan-500/30 hover:shadow-cyan-500/50 hover:scale-105 flex items-center gap-2"
+              className="group animate-cta-pulse px-8 py-4 bg-gradient-to-r from-rose-500 to-red-600 text-white rounded-xl font-semibold text-lg hover:from-rose-400 hover:to-red-500 transition-all duration-300 shadow-2xl shadow-rose-500/30 hover:shadow-rose-500/50 hover:scale-105 flex items-center gap-2"
             >
               Ontdek onze pakketten
               <svg className="w-5 h-5 group-hover:translate-x-1 transition-transform" fill="none" viewBox="0 0 24 24" stroke="currentColor">
