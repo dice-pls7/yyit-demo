@@ -3,6 +3,7 @@ import Hero from '../components/Hero';
 import SecurityRealitySection from '../components/SecurityRealitySection';
 import Pricing from '../components/Pricing';
 import ComparisonTable from '../components/ComparisonTable';
+import EmailCapture from '../components/EmailCapture';
 import Solutions from '../components/Solutions';
 import About from '../components/About';
 import Partners from '../components/Partners';
@@ -17,7 +18,8 @@ export default function Home() {
       <SecurityRealitySection />
       <Solutions />
       <Pricing />
-      <ComparisonTable />      
+      <ComparisonTable />
+      <EmailCapture />
       <About />
       <Partners />
       <CTA />
