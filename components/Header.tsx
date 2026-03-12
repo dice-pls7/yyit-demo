@@ -19,6 +19,7 @@ export default function Header() {
                   alt="YYIT logo"
                   width={40}
                   height={40}
+                  unoptimized
                   className="w-full h-full object-cover"
                 />
               </div>
