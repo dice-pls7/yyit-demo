@@ -2,6 +2,7 @@ export default function Pricing() {
   const plans = [
     {
       name: 'Starter',
+      buttonname: 'Gemak',
       price: '12.50',
       badge: 'Beste keus voor ZZP\'ers',
       description: 'Perfect voor zelfstandigen die betrouwbare IT-ondersteuning nodig hebben',
@@ -16,7 +17,8 @@ export default function Pricing() {
     },
     {
       name: 'Compleet',
-      price: '37',
+      buttonname: 'Rust',
+      price: '49',
       badge: 'Meestgekozen',
       description: 'Ideaal voor kleine teams die complete IT-beveiliging willen',
       features: [
@@ -30,15 +32,16 @@ export default function Pricing() {
     },
     {
       name: 'Premium',
-      price: '49',
+      buttonname: 'Volledige Ontzorging',
+      price: '99',
       badge: 'Geschikt voor grote organisaties',
       description: 'Enterprise-grade beveiliging voor groeiende bedrijven',
       features: [
-        'High-priority 24/7 monitoring',
-        'Real-time patchbeheer',
-        'AI-powered EDR antivirus',
-        'Dedicated support manager',
-        'Uitgebreide remote services'
+        'Hoge prioriteit IT-support',
+        'Problemen opgelost voordat je het merkt',
+        'Wij regelen patchbeheer en updates voor je',
+        'AI-Aangedreven EDR antivirus',
+        'Toegewijde support manager'
       ],
       highlighted: false,
     },
@@ -130,7 +133,7 @@ export default function Pricing() {
                     : 'bg-slate-800 text-white hover:bg-slate-700 border border-slate-700'
                 }`}
               >
-                Selecteer {plan.name}
+                Selecteer {plan.buttonname}
               </button>
             </div>
           ))}
