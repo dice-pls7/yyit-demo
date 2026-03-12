@@ -1,4 +1,37 @@
+'use client';
+
+import { useState } from 'react';
+
 export default function Pricing() {
+  const [loadingPlan, setLoadingPlan] = useState<string | null>(null);
+  const [error, setError] = useState('');
+
+  async function handleCheckout(plan: { name: string; price: string; description: string }) {
+    setLoadingPlan(plan.name);
+    setError('');
+    try {
+      const res = await fetch('/api/checkout', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          description: `YYIT ${plan.name} pakket`,
+          price: parseFloat(plan.price),
+          reference: `YYIT-${plan.name.toUpperCase()}-${Date.now()}`,
+        }),
+      });
+      const data = await res.json();
+      if (!res.ok || !data.redirectUrl) {
+        setError(data.error ?? 'Betaling starten mislukt. Probeer het opnieuw.');
+      } else {
+        window.location.href = data.redirectUrl;
+      }
+    } catch {
+      setError('Er ging iets mis. Probeer het opnieuw.');
+    } finally {
+      setLoadingPlan(null);
+    }
+  }
+
   const plans = [
     {
       name: 'Starter',
@@ -127,20 +160,25 @@ export default function Pricing() {
 
               {/* CTA Button */}
               <button
-                className={`w-full py-4 rounded-xl font-semibold transition-all duration-300 ${
+                onClick={() => handleCheckout(plan)}
+                disabled={loadingPlan === plan.name}
+                className={`w-full py-4 rounded-xl font-semibold transition-all duration-300 disabled:opacity-60 disabled:cursor-not-allowed ${
                   plan.highlighted
                     ? 'bg-gradient-to-r from-cyan-500 to-blue-600 text-white hover:from-cyan-400 hover:to-blue-500 shadow-lg shadow-cyan-500/25 hover:shadow-cyan-500/40'
                     : 'bg-slate-800 text-white hover:bg-slate-700 border border-slate-700'
                 }`}
               >
-                Selecteer {plan.buttonname}
+                {loadingPlan === plan.name ? 'Laden...' : `Selecteer ${plan.buttonname}`}
               </button>
             </div>
           ))}
         </div>
 
         {/* Bottom Note */}
-        <p className="text-center text-slate-500 mt-12 text-sm">
+        {error && (
+          <p className="text-center text-red-400 mt-6 text-sm">{error}</p>
+        )}
+        <p className="text-center text-slate-500 mt-4 text-sm">
           Alle prijzen zijn exclusief BTW. Geen verborgen kosten, geen verrassingen.
         </p>
       </div>
