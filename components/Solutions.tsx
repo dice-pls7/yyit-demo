@@ -7,8 +7,8 @@ export default function Solutions() {
         </svg>
       ),
       title: 'Cybersecurity Management',
-      description: 'Bescherm je bedrijf tegen moderne cyberdreigingen met proactieve monitoring, endpoint protection en geavanceerde threat detection.',
-      features: ['Real-time monitoring', 'EDR beveiliging', 'Security audits']
+      description: 'Bescherm je bedrijf tegen moderne cyberdreigingen met proactieve monitoring, endpoint protection en geavanceerde bedreigingsdetectie.',
+      features: ['Real-time monitoring', 'Endpoint detection and response beveiliging', 'Houd hackers buiten de deur']
     },
     // {
     //   icon: (
@@ -27,8 +27,8 @@ export default function Solutions() {
         </svg>
       ),
       title: 'Data Back-up & Recovery',
-      description: 'Verlies nooit meer kritische data. Automatische back-ups, snelle recovery en compliance met internationale standaarden.',
-      features: ['Automatische back-ups', 'Disaster recovery', 'Compliance reports']
+      description: 'Verlies nooit meer kritische data. Wij zorgen voor automatische back-ups, snel herstel en naleving van internationale standaarden.',
+      features: ['Automatische back-ups', 'Herstel van systemen en bestanden', 'Geen zorgen over dataverlies']
     },
     // {
     //   icon: (
@@ -47,8 +47,8 @@ export default function Solutions() {
         </svg>
       ),
       title: 'Helpdesk Support',
-      description: 'Directe ondersteuning wanneer je het nodig hebt. Ons team staat klaar om al je IT-vragen en -problemen snel op te lossen.',
-      features: ['Multi-channel support', 'SLA garanties', 'Kennisbank toegang']
+      description: 'IT-probleem? Je krijgt een specialist die met je meekijkt en het snel oplost. Geen wachttijden, geen frustraties.',
+      features: ['Hulp binnen handbereik', 'Sneller door bij onverwachte problemen', 'Vast contactpersoon voor al je IT-vragen',  ]
     },
     // {
     //   icon: (
