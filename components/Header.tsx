@@ -1,6 +1,5 @@
 'use client';
 
-import Image from 'next/image';
 import { useState } from 'react';
 
 export default function Header() {
@@ -14,12 +13,11 @@ export default function Header() {
           <div className="flex items-center">
             <a href="#" className="flex items-center gap-2 group">
               <div className="w-10 h-10 rounded-lg overflow-hidden transform group-hover:scale-110 transition-transform duration-300">
-                <Image
-                  src="/favicon.svg"
+                <img
+                  src="/Favicon.svg"
                   alt="YYIT logo"
                   width={40}
                   height={40}
-                  unoptimized
                   className="w-full h-full object-cover"
                 />
               </div>

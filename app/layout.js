@@ -15,8 +15,8 @@ export const metadata = {
   title: "YYIT",
   description: "Beveilig je digitale wereld met onze geavanceerde cybersecurity-oplossingen. Bescherm je gegevens, netwerk en systemen tegen bedreigingen.",
   icons: {
-    icon: "/favicon.svg",
-    shortcut: "/favicon.svg",
+    icon: "/Favicon.svg",
+    shortcut: "/Favicon.svg",
   },
 };
 
