@@ -10,7 +10,7 @@ export async function POST(req: NextRequest) {
   const serviceId = process.env.PAYNL_SERVICE_ID;
   const userId = process.env.PAYNL_USER_ID;
   const tokenId = process.env.PAYNL_TOKEN_ID;
-  const baseUrl = process.env.NEXT_PUBLIC_BASE_URL ?? 'https://www.yyit.nl/';
+  const baseUrl = process.env.NEXT_PUBLIC_BASE_URL ?? 'https://www.yyit.nl/#';
 
   if (!serviceId || !userId || !tokenId) {
     return NextResponse.json({ error: 'Server configuratie ontbreekt' }, { status: 500 });
