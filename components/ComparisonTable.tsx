@@ -1,17 +1,75 @@
+'use client';
+
+import { useState } from 'react';
+
+function TooltipIcon({ text }: { text: string }) {
+  const [open, setOpen] = useState(false);
+
+  return (
+    <span className="relative inline-flex items-center ml-1.5 group">
+      <button
+        type="button"
+        onClick={() => setOpen(o => !o)}
+        onMouseEnter={() => setOpen(true)}
+        onMouseLeave={() => {
+          const timer = setTimeout(() => setOpen(false), 200);
+          return () => clearTimeout(timer);
+        }} // make the question mark be put on the left of the text, so it doesn't get cut off on mobile, by wrapping it in a span
+        
+        aria-label="Meer informatie"
+      >
+        <svg className="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+          <circle cx="12" cy="12" r="10" />
+          <line x1="12" y1="16" x2="12" y2="12" />
+          <line x1="12" y1="8" x2="12.01" y2="8" />
+        </svg>
+      </button>
+      <span
+        className={`absolute left-6 top-1/2 -translate-y-1/2 z-20 w-56 px-3 py-2 bg-slate-800 border border-slate-700 rounded-lg text-xs text-slate-300 shadow-xl pointer-events-none transition-opacity duration-150 opacity-0 group-hover:opacity-100${open ? ' !opacity-100' : ''}`}
+      >
+        {text}
+      </span>
+    </span>
+  );
+}
+
+type Feature = {
+  name: string;
+  tooltip?: string;
+  starter: boolean | string;
+  compleet: boolean | string;
+  premium: boolean | string;
+};
+
 export default function ComparisonTable() {
-  const features = [
+  const features: Feature[] = [
     { name: 'Monitoring', starter: true, compleet: true, premium: true },
+    { name: 'AI Antivirus (EDR)', starter: true, compleet: true, premium: true },
     { name: 'Patchbeheer', starter: true, compleet: true, premium: true },
-    { name: 'Antivirus', starter: true, compleet: true, premium: true },
-    { name: 'Helpdesk ondersteuning', starter: 'Email', compleet: 'Prioriteit', premium: 'Dedicated' },
-    { name: 'Remote monitoring', starter: true, compleet: true, premium: true },
-    { name: 'Back-up opslag', starter: '1GB', compleet: '10GB', premium: '100GB' },
-    { name: 'AI antivirus (EDR)', starter: false, compleet: false, premium: true },
-    { name: 'Prioriteit support', starter: false, compleet: true, premium: true },
-    { name: '24/7 Beschikbaarheid', starter: false, compleet: true, premium: true },
-    { name: 'Security audits', starter: false, compleet: false, premium: true },
-    { name: 'Compliance rapportage', starter: false, compleet: false, premium: true },
-    { name: 'Custom integraties', starter: false, compleet: false, premium: true },
+    { name: 'Patches worden door ons geïnstalleerd', starter: false, compleet: true, premium: true },
+    { name: '24/7 monitoring', tooltip: 'We bewaken je systemen op verdachte activiteiten en potentiële bedreigingen.', starter: false, compleet: true, premium: true },
+    { name: 'Proactieve probleemoplossing', tooltip: 'We lossen problemen op voordat jij ze merkt, zodat jij ongestoord kunt werken.', starter: false, compleet: false, premium: true },
+    {
+      name: 'IT-support',
+      tooltip: 'De maximale tijd waarbinnen je een reactie ontvangt op je IT-vraag of melding.',
+      starter: '< 48 uur',
+      compleet: '< 24 uur',
+      premium: 'Altijd bereikbaar',
+    },
+    {
+      name: 'Back-up opslag',
+      tooltip: 'Hoeveelheid opslagruimte voor automatische back-ups van je bestanden en systemen.',
+      starter: '1GB',
+      compleet: '10GB',
+      premium: '100GB',
+    },
+    {
+      name: 'Ondersteuning op locatie',
+      tooltip: 'Een van onze technici komt bij jou op kantoor langs als het probleem dat vereist.',
+      starter: false,
+      compleet: false,
+      premium: true,
+    },
   ];
 
   const renderCell = (value: boolean | string) => {
@@ -53,10 +111,10 @@ export default function ComparisonTable() {
         {/* Scrollable Container for Mobile */}
         <div className="overflow-x-auto scrollbar-thin scrollbar-thumb-cyan-500/20 scrollbar-track-slate-800/50">
           <div className="min-w-[640px]">
-            {/* Table */}
-            <div className="bg-slate-900/50 border border-slate-800 rounded-2xl overflow-hidden backdrop-blur-sm">
+            {/* Table — overflow-visible so tooltips can escape the container */}
+            <div className="bg-slate-900/50 border border-slate-800 rounded-2xl backdrop-blur-sm">
               {/* Header */}
-              <div className="grid grid-cols-4 gap-4 p-6 bg-slate-800/50 border-b border-slate-700">
+              <div className="grid grid-cols-4 gap-4 p-6 bg-slate-800/50 border-b border-slate-700 rounded-t-2xl">
                 <div className="text-slate-400 font-semibold text-sm">Functie</div>
                 <div className="text-center">
                   <div className="text-white font-bold">Starter</div>
@@ -67,11 +125,11 @@ export default function ComparisonTable() {
                     Meestgekozen
                   </div>
                   <div className="text-white font-bold">Compleet</div>
-                  <div className="text-cyan-400 text-sm mt-1">€37/mnd</div>
+                  <div className="text-cyan-400 text-sm mt-1">€49/mnd</div>
                 </div>
                 <div className="text-center">
                   <div className="text-white font-bold">Premium</div>
-                  <div className="text-cyan-400 text-sm mt-1">€49/mnd</div>
+                  <div className="text-cyan-400 text-sm mt-1">€99/mnd</div>
                 </div>
               </div>
 
@@ -80,10 +138,13 @@ export default function ComparisonTable() {
                 <div
                   key={feature.name}
                   className={`grid grid-cols-4 gap-4 p-6 items-center transition-colors hover:bg-slate-800/30 ${
-                    index !== features.length - 1 ? 'border-b border-slate-800/50' : ''
+                    index === features.length - 1 ? 'rounded-b-2xl' : 'border-b border-slate-800/50'
                   }`}
                 >
-                  <div className="text-slate-300 text-sm font-medium">{feature.name}</div>
+                  <div className="text-slate-300 text-sm font-medium flex items-center">
+                    {feature.name}
+                    {feature.tooltip && <TooltipIcon text={feature.tooltip} />}
+                  </div>
                   <div className="flex justify-center">{renderCell(feature.starter)}</div>
                   <div className="flex justify-center bg-cyan-500/5 -my-6 py-6">
                     {renderCell(feature.compleet)}
