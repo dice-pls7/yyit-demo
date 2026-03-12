@@ -1,50 +1,11 @@
 <svg width="300" height="300" viewBox="0 0 300 300" fill="none" xmlns="http://www.w3.org/2000/svg">
-<g filter="url(#filter0_d_1_19)">
-<path d="M149.5 265.4C221.297 265.4 279.5 207.197 279.5 135.4C279.5 63.603 221.297 5.39999 149.5 5.39999C77.703 5.39999 19.5 63.603 19.5 135.4C19.5 207.197 77.703 265.4 149.5 265.4Z" fill="#F70000"/>
-<path d="M110.5 97.4C117.127 97.4 122.5 92.0274 122.5 85.4C122.5 78.7726 117.127 73.4 110.5 73.4C103.873 73.4 98.5 78.7726 98.5 85.4C98.5 92.0274 103.873 97.4 110.5 97.4Z" fill="white"/>
-<g filter="url(#filter1_d_1_19)">
-<path d="M85 120L110 150" stroke="white" stroke-width="16" stroke-linecap="round"/>
-<path d="M135 120L110 150" stroke="white" stroke-width="16" stroke-linecap="round"/>
-<path d="M110 150V200Z" fill="#D9D9D9"/>
-<path d="M110 150V200" stroke="white" stroke-width="16" stroke-linecap="round"/>
-</g>
-<path d="M195.5 97.4C202.127 97.4 207.5 92.0274 207.5 85.4C207.5 78.7726 202.127 73.4 195.5 73.4C188.873 73.4 183.5 78.7726 183.5 85.4C183.5 92.0274 188.873 97.4 195.5 97.4Z" fill="white"/>
-<g filter="url(#filter2_d_1_19)">
-<path d="M170 120L195 150" stroke="white" stroke-width="16" stroke-linecap="round"/>
-<path d="M220 120L195 150" stroke="white" stroke-width="16" stroke-linecap="round"/>
-<path d="M195 150V200" stroke="white" stroke-width="16" stroke-linecap="round"/>
-</g>
-</g>
-<defs>
-<filter id="filter0_d_1_19" x="-4" y="0" width="308" height="308" filterUnits="userSpaceOnUse" color-interpolation-filters="sRGB">
-<feFlood flood-opacity="0" result="BackgroundImageFix"/>
-<feColorMatrix in="SourceAlpha" type="matrix" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 127 0" result="hardAlpha"/>
-<feOffset dy="4"/>
-<feGaussianBlur stdDeviation="2"/>
-<feComposite in2="hardAlpha" operator="out"/>
-<feColorMatrix type="matrix" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0.25 0"/>
-<feBlend mode="normal" in2="BackgroundImageFix" result="effect1_dropShadow_1_19"/>
-<feBlend mode="normal" in="SourceGraphic" in2="effect1_dropShadow_1_19" result="shape"/>
-</filter>
-<filter id="filter1_d_1_19" x="72.9998" y="112" width="74.0004" height="104" filterUnits="userSpaceOnUse" color-interpolation-filters="sRGB">
-<feFlood flood-opacity="0" result="BackgroundImageFix"/>
-<feColorMatrix in="SourceAlpha" type="matrix" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 127 0" result="hardAlpha"/>
-<feOffset dy="4"/>
-<feGaussianBlur stdDeviation="2"/>
-<feComposite in2="hardAlpha" operator="out"/>
-<feColorMatrix type="matrix" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0.25 0"/>
-<feBlend mode="normal" in2="BackgroundImageFix" result="effect1_dropShadow_1_19"/>
-<feBlend mode="normal" in="SourceGraphic" in2="effect1_dropShadow_1_19" result="shape"/>
-</filter>
-<filter id="filter2_d_1_19" x="158" y="112" width="74.0004" height="104" filterUnits="userSpaceOnUse" color-interpolation-filters="sRGB">
-<feFlood flood-opacity="0" result="BackgroundImageFix"/>
-<feColorMatrix in="SourceAlpha" type="matrix" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 127 0" result="hardAlpha"/>
-<feOffset dy="4"/>
-<feGaussianBlur stdDeviation="2"/>
-<feComposite in2="hardAlpha" operator="out"/>
-<feColorMatrix type="matrix" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0.25 0"/>
-<feBlend mode="normal" in2="BackgroundImageFix" result="effect1_dropShadow_1_19"/>
-<feBlend mode="normal" in="SourceGraphic" in2="effect1_dropShadow_1_19" result="shape"/>
-</filter>
-</defs>
+<path d="M150 290C227.32 290 290 227.32 290 150C290 72.6801 227.32 10 150 10C72.6801 10 10 72.6801 10 150C10 227.32 72.6801 290 150 290Z" fill="white"/>
+<path d="M100 97C106.627 97 112 91.6274 112 85C112 78.3726 106.627 73 100 73C93.3726 73 88 78.3726 88 85C88 91.6274 93.3726 97 100 97Z" fill="#DC2626"/>
+<path d="M75 120L100 150" stroke="#DC2626" stroke-width="16" stroke-linecap="round"/>
+<path d="M125 120L100 150" stroke="#DC2626" stroke-width="16" stroke-linecap="round"/>
+<path d="M100 150V200" stroke="#DC2626" stroke-width="16" stroke-linecap="round"/>
+<path d="M200 97C206.627 97 212 91.6274 212 85C212 78.3726 206.627 73 200 73C193.373 73 188 78.3726 188 85C188 91.6274 193.373 97 200 97Z" fill="#DC2626"/>
+<path d="M175 120L200 150" stroke="#DC2626" stroke-width="16" stroke-linecap="round"/>
+<path d="M225 120L200 150" stroke="#DC2626" stroke-width="16" stroke-linecap="round"/>
+<path d="M200 150V200" stroke="#DC2626" stroke-width="16" stroke-linecap="round"/>
 </svg>
