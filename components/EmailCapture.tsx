@@ -5,12 +5,31 @@ import { useState } from 'react';
 export default function EmailCapture() {
   const [email, setEmail] = useState('');
   const [submitted, setSubmitted] = useState(false);
+  const [error, setError] = useState('');
+  const [loading, setLoading] = useState(false);
 
-  function handleSubmit(e: React.FormEvent) {
+  async function handleSubmit(e: React.FormEvent) {
     e.preventDefault();
     if (!email) return;
-    // TODO: koppel aan Mailchimp / ActiveCampaign / Brevo API
-    setSubmitted(true);
+    setLoading(true);
+    setError('');
+    try {
+      const res = await fetch('/api/subscribe', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ email }),
+      });
+      if (!res.ok) {
+        const data = await res.json();
+        setError(data.error ?? 'Er ging iets mis. Probeer het opnieuw.');
+      } else {
+        setSubmitted(true);
+      }
+    } catch {
+      setError('Er ging iets mis. Probeer het opnieuw.');
+    } finally {
+      setLoading(false);
+    }
   }
 
   return (
@@ -45,11 +64,16 @@ export default function EmailCapture() {
             />
             <button
               type="submit"
-              className="w-full sm:w-auto px-6 py-3 bg-gradient-to-r from-cyan-500 to-blue-600 hover:from-cyan-400 hover:to-blue-500 text-white rounded-xl text-sm font-semibold transition-all duration-200 shadow-lg shadow-cyan-500/20 whitespace-nowrap"
+              disabled={loading}
+              className="w-full sm:w-auto px-6 py-3 bg-gradient-to-r from-cyan-500 to-blue-600 hover:from-cyan-400 hover:to-blue-500 text-white rounded-xl text-sm font-semibold transition-all duration-200 shadow-lg shadow-cyan-500/20 whitespace-nowrap disabled:opacity-60 disabled:cursor-not-allowed"
             >
-              Stuur mij een voorstel
+              {loading ? 'Bezig...' : 'Stuur mij een voorstel'}
             </button>
           </form>
+        )}
+
+        {error && (
+          <p className="text-red-400 text-sm mt-3">{error}</p>
         )}
 
         <p className="text-slate-600 text-xs mt-4">
