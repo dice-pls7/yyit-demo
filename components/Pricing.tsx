@@ -242,6 +242,8 @@ export default function Pricing() {
                 <input
                   id="checkout-name"
                   type="text"
+                  autoComplete="name"
+                  name='fullname'
                   required
                   value={customerName}
                   onChange={e => setCustomerName(e.target.value)}
@@ -257,6 +259,8 @@ export default function Pricing() {
                 <input
                   id="checkout-email"
                   type="email"
+                  autoComplete="email"
+                  name='email'
                   required
                   value={customerEmail}
                   onChange={e => setCustomerEmail(e.target.value)}
