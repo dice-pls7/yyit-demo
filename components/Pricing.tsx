@@ -2,9 +2,38 @@
 
 import { useState } from 'react';
 
+type Plan = { name: string; buttonname: string; price: string; badge: string; description: string; features: string[]; highlighted: boolean };
+
 export default function Pricing() {
   const [loadingPlan, setLoadingPlan] = useState<string | null>(null);
   const [error, setError] = useState('');
+
+  const [selectedPlan, setSelectedPlan] = useState<Plan | null>(null);
+  const [customerName, setCustomerName] = useState('');
+  const [customerEmail, setCustomerEmail] = useState('');
+
+  function openCheckoutForm(plan: Plan) {
+    console.log('[Checkout] User initiated checkout for plan:', plan.name, '— €' + plan.price + '/maand');
+    setSelectedPlan(plan);
+    setCustomerName('');
+    setCustomerEmail('');
+    setError('');
+  }
+
+  function closeCheckoutForm() {
+    setSelectedPlan(null);
+  }
+
+  async function handleFormSubmit(e: React.FormEvent) {
+    e.preventDefault();
+    if (!selectedPlan) return;
+
+    // NOTE: Logging name and email to console as requested (replace with API call when available)
+    console.log('[Checkout] Customer details collected:', { name: customerName, email: customerEmail, plan: selectedPlan.name });
+
+    closeCheckoutForm();
+    await handleCheckout(selectedPlan);
+  }
 
   async function handleCheckout(plan: { name: string; price: string; description: string }) {
     setLoadingPlan(plan.name);
@@ -160,7 +189,7 @@ export default function Pricing() {
 
               {/* CTA Button */}
               <button
-                onClick={() => handleCheckout(plan)}
+                onClick={() => openCheckoutForm(plan)}
                 disabled={loadingPlan === plan.name}
                 className={`w-full py-4 rounded-xl font-semibold transition-all duration-300 disabled:opacity-60 disabled:cursor-not-allowed ${
                   plan.highlighted
@@ -182,6 +211,67 @@ export default function Pricing() {
           Alle prijzen zijn exclusief BTW. Geen verborgen kosten, geen verrassingen.
         </p>
       </div>
+
+      {/* Checkout Details Modal */}
+      {selectedPlan && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/70 backdrop-blur-sm px-4">
+          <div className="relative w-full max-w-md rounded-2xl bg-slate-900 border border-slate-700 p-8 shadow-2xl">
+            <button
+              onClick={closeCheckoutForm}
+              className="absolute top-4 right-4 text-slate-400 hover:text-white transition-colors"
+              aria-label="Sluiten"
+            >
+              <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
+                <path fillRule="evenodd" d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z" clipRule="evenodd" />
+              </svg>
+            </button>
+
+            <h3 className="text-xl font-bold text-white mb-1">Bijna klaar!</h3>
+            <p className="text-slate-400 text-sm mb-6">
+              Vul je gegevens in om door te gaan met het <span className="text-cyan-400 font-medium">{selectedPlan.name}</span> pakket (€{selectedPlan.price}/maand).
+            </p>
+
+            <form onSubmit={handleFormSubmit} className="space-y-4">
+              <div>
+                <label htmlFor="checkout-name" className="block text-sm font-medium text-slate-300 mb-1">
+                  Naam
+                </label>
+                <input
+                  id="checkout-name"
+                  type="text"
+                  required
+                  value={customerName}
+                  onChange={e => setCustomerName(e.target.value)}
+                  placeholder="Jan de Vries"
+                  className="w-full px-4 py-3 rounded-xl bg-slate-800 border border-slate-700 text-white placeholder-slate-500 text-sm focus:outline-none focus:border-cyan-500/60 focus:ring-1 focus:ring-cyan-500/30 transition-colors"
+                />
+              </div>
+
+              <div>
+                <label htmlFor="checkout-email" className="block text-sm font-medium text-slate-300 mb-1">
+                  E-mailadres
+                </label>
+                <input
+                  id="checkout-email"
+                  type="email"
+                  required
+                  value={customerEmail}
+                  onChange={e => setCustomerEmail(e.target.value)}
+                  placeholder="jouw@bedrijf.nl"
+                  className="w-full px-4 py-3 rounded-xl bg-slate-800 border border-slate-700 text-white placeholder-slate-500 text-sm focus:outline-none focus:border-cyan-500/60 focus:ring-1 focus:ring-cyan-500/30 transition-colors"
+                />
+              </div>
+
+              <button
+                type="submit"
+                className="w-full py-3 rounded-xl font-semibold bg-gradient-to-r from-cyan-500 to-blue-600 text-white hover:from-cyan-400 hover:to-blue-500 shadow-lg shadow-cyan-500/25 transition-all duration-300"
+              >
+                Doorgaan naar betaling
+              </button>
+            </form>
+          </div>
+        </div>
+      )}
     </section>
   );
 }
