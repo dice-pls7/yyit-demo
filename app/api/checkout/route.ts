@@ -10,17 +10,13 @@ const VALID_PLANS: Record<string, number> = {
 // Trusted domains for payment redirects
 const TRUSTED_REDIRECT_HOSTS = ['connect.pay.nl'];
 
-// Tolerance for floating-point price comparison (e.g. 12.50 vs 12.4999...)
-const PRICE_EPSILON = 0.001;
-
 export async function POST(req: NextRequest) {
   const body = await req.json();
-  const { description, price, reference } = body;
+  const { description, reference } = body;
 
   // Type validation
   if (
     typeof description !== 'string' ||
-    typeof price !== 'number' ||
     typeof reference !== 'string' ||
     !description ||
     !reference
@@ -28,10 +24,10 @@ export async function POST(req: NextRequest) {
     return NextResponse.json({ error: 'Ongeldige invoer' }, { status: 400 });
   }
 
-  // Whitelist price validation — prevent price manipulation
+  // Look up the price server-side — the client never sends a price
   const validPrice = VALID_PLANS[description.trim()];
-  if (validPrice === undefined || Math.abs(validPrice - price) > PRICE_EPSILON) {
-    return NextResponse.json({ error: 'Ongeldige prijs of pakket' }, { status: 400 });
+  if (validPrice === undefined) {
+    return NextResponse.json({ error: 'Onbekend pakket' }, { status: 400 });
   }
 
   const serviceId = process.env.PAYNL_SERVICE_ID;

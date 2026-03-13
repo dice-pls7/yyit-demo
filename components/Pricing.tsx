@@ -15,7 +15,6 @@ export default function Pricing() {
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
           description: `YYIT ${plan.name} pakket`,
-          price: parseFloat(plan.price),
           reference: `YYIT-${plan.name.toUpperCase()}-${Date.now()}`,
         }),
       });
