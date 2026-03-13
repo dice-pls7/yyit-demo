@@ -1,6 +1,7 @@
 'use client';
 
 import { useState } from 'react';
+import { track } from '@vercel/analytics';
 
 type Plan = { name: string; buttonname: string; price: string; badge: string; description: string; features: string[]; highlighted: boolean };
 
@@ -14,6 +15,7 @@ export default function Pricing() {
 
   function openCheckoutForm(plan: Plan) {
     console.log('[Checkout] User initiated checkout for plan:', plan.name, '— €' + plan.price + '/maand');
+    track('checkout_form_opened', { plan: plan.name, price: plan.price });
     setSelectedPlan(plan);
     setCustomerName('');
     setCustomerEmail('');
@@ -30,6 +32,7 @@ export default function Pricing() {
 
     // NOTE: Logging name and email to console as requested (replace with API call when available)
     console.log('[Checkout] Customer details collected:', { name: customerName, email: customerEmail, plan: selectedPlan.name });
+    track('checkout_form_submitted', { plan: selectedPlan.name, price: selectedPlan.price });
 
     closeCheckoutForm();
     await handleCheckout(selectedPlan);
