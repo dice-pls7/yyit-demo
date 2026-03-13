@@ -1,9 +1,12 @@
 import { NextRequest, NextResponse } from 'next/server';
 
-export async function POST(req: NextRequest) {
-  const { email } = await req.json();
+const EMAIL_REGEX = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
-  if (!email || !email.includes('@')) {
+export async function POST(req: NextRequest) {
+  const body = await req.json();
+  const { email } = body;
+
+  if (typeof email !== 'string' || !EMAIL_REGEX.test(email.trim())) {
     return NextResponse.json({ error: 'Ongeldig e-mailadres' }, { status: 400 });
   }
 
@@ -24,7 +27,7 @@ export async function POST(req: NextRequest) {
         'Content-Type': 'application/json',
       },
       body: JSON.stringify({
-        email_address: email,
+        email_address: email.trim(),
         status: 'subscribed',
       }),
     }

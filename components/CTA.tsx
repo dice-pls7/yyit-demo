@@ -10,11 +10,11 @@ export default function CTA() {
     phone: '',
     message: ''
   });
+  const [submitted, setSubmitted] = useState(false);
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    // Handle form submission here
-    console.log('Form submitted:', formData);
+    setSubmitted(true);
   };
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
@@ -92,6 +92,15 @@ export default function CTA() {
 
           {/* Right Column - Contact Form */}
           <div className="animate-fadeInUp" style={{ animationDelay: '200ms' }}>
+            {submitted ? (
+              <div className="bg-slate-900/50 backdrop-blur-xl border border-slate-800 rounded-2xl p-8 md:p-10 shadow-2xl flex flex-col items-center justify-center text-center space-y-4">
+                <svg className="w-12 h-12 text-cyan-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
+                </svg>
+                <h3 className="text-xl font-bold text-white">Aanvraag ontvangen!</h3>
+                <p className="text-slate-400">Bedankt voor je bericht. We nemen binnen 24 uur contact met je op.</p>
+              </div>
+            ) : (
             <form onSubmit={handleSubmit} className="bg-slate-900/50 backdrop-blur-xl border border-slate-800 rounded-2xl p-8 md:p-10 space-y-6 shadow-2xl">
               <div>
                 <label htmlFor="name" className="block text-sm font-medium text-slate-300 mb-2">
@@ -184,6 +193,7 @@ export default function CTA() {
                 We nemen binnen 24 uur contact met je op
               </p>
             </form>
+            )}
           </div>
         </div>
       </div>

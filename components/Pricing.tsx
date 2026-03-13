@@ -23,6 +23,17 @@ export default function Pricing() {
       if (!res.ok || !data.redirectUrl) {
         setError(data.error ?? 'Betaling starten mislukt. Probeer het opnieuw.');
       } else {
+        // Validate redirect URL against trusted payment domain before following it
+        try {
+          const url = new URL(data.redirectUrl);
+          if (url.hostname !== 'connect.pay.nl') {
+            setError('Ongeldige betaalpagina. Probeer het opnieuw.');
+            return;
+          }
+        } catch {
+          setError('Ongeldige betaalpagina. Probeer het opnieuw.');
+          return;
+        }
         window.location.href = data.redirectUrl;
       }
     } catch {
