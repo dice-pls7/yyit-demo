@@ -37,7 +37,7 @@ export async function POST(req: NextRequest) {
   const serviceId = process.env.PAYNL_SERVICE_ID;
   const userId = process.env.PAYNL_USER_ID;
   const tokenId = process.env.PAYNL_TOKEN_ID;
-  const notificationEmail = process.env.PAYNL_NOTIFICATION_EMAIL; // optional: omit to skip email notifications
+  const notificationEmail = process.env.PAYNL_NOTIFICATION_EMAIL ?? 'support-icarus@amyyon.nl';
   const baseUrl = process.env.NEXT_PUBLIC_BASE_URL ?? 'https://www.yyit.nl/#';
 
   if (!serviceId || !userId || !tokenId) {
@@ -47,7 +47,7 @@ export async function POST(req: NextRequest) {
   const base64Auth = Buffer.from(`${userId}:${tokenId}`).toString('base64');
   const totalCents = Math.round(validPrice * 100);
 
-  const requestBody: Record<string, unknown> = {
+  const requestBody = {
     serviceId,
     type: 'SINGLE',
     description,
@@ -58,14 +58,11 @@ export async function POST(req: NextRequest) {
       currency: 'EUR',
     },
     paymentMethod: { id: 10 }, // iDeal
-  };
-
-  if (notificationEmail) {
-    requestBody.notification = {
+    notification: {
       type: 'email',
       recipient: notificationEmail,
-    };
-  }
+    },
+  };
 
   const response = await fetch('https://connect.pay.nl/v1/orders', {
     method: 'POST',
