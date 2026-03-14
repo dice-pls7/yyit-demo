@@ -14,6 +14,7 @@ export default function Pricing() {
   const [customerEmail, setCustomerEmail] = useState('');
 
   function openCheckoutForm(plan: Plan) {
+    console.log('[PostHog] Capturing checkout_form_opened event', { plan: plan.name, price: plan.price });
     posthog.capture('checkout_form_opened', { plan: plan.name, price: plan.price });
     setSelectedPlan(plan);
     setCustomerName('');
@@ -52,7 +53,8 @@ export default function Pricing() {
       if (!res.ok || !data.redirectUrl) {
         setError(data.error ?? 'Betaling starten mislukt. Probeer het opnieuw.');
       } else {
-        posthog.capture('payment_link_opened', { plan: plan.name, price: plan.price });
+        console.log('[PostHog] Capturing payment_link_opened event', { plan: plan.name, price: plan.price });
+        posthog.capture('payment_link_opened', { plan: plan.name, price: plan.price }, { send_instantly: true });
         window.location.href = data.redirectUrl;
       }
     } catch {
