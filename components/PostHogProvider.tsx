@@ -16,7 +16,6 @@ export default function PostHogProvider({ children }: { children: React.ReactNod
     }
 
     if (!posthog.__loaded) {
-      console.log('[PostHog] Initializing with key:', key?.slice(0, 10) + '...');
       posthog.init(key, {
         api_host: '/ingest',
         ui_host: process.env.NEXT_PUBLIC_POSTHOG_HOST,
@@ -24,9 +23,6 @@ export default function PostHogProvider({ children }: { children: React.ReactNod
         capture_pageleave: true,
         persistence: 'localStorage',
       });
-      console.log('[PostHog] Initialized successfully');
-    } else {
-      console.log('[PostHog] Already loaded');
     }
   }, [key]);
 
