@@ -35,30 +35,34 @@ The easiest way to deploy your Next.js app is to use the [Vercel Platform](https
 
 Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
 
-## Analytics / Viewing Events (no Pro plan required)
+## Analytics (PostHog — free up to 1M events/month)
 
-Every time a visitor interacts with the pricing section, an event is logged via the `/api/track` route. These logs are visible for free on any Vercel plan.
+This project uses [PostHog](https://posthog.com) for product analytics — a proper dashboard with funnels, session recordings, A/B testing, and feature flags. **Free up to 1,000,000 events per month** — no credit card required.
 
-**Where to look:**
+### Setup (5 minutes)
 
-1. Open your project on [vercel.com](https://vercel.com)
-2. Click the **"Logs"** tab at the top of the project page
-3. In the search bar type **`[ANALYTICS]`** to filter only analytics events
+1. Sign up at [app.posthog.com](https://app.posthog.com) (or [eu.posthog.com](https://eu.posthog.com) for EU data residency)
+2. Create a new project → copy your **Project API Key** (starts with `phc_`)
+3. Add the key to your Vercel project environment variables:
+   - `NEXT_PUBLIC_POSTHOG_KEY` = `phc_your_key_here`
+   - `NEXT_PUBLIC_POSTHOG_HOST` = `https://eu.i.posthog.com` (EU) or `https://us.i.posthog.com` (US)
+4. Redeploy — events start flowing immediately
 
-**What you'll see** (one line per event in the Messages column):
+See `.env.example` for all required variables.
 
-```
-[ANALYTICS] checkout_form_opened | plan=Compleet price=49
-[ANALYTICS] checkout_form_submitted | plan=Compleet price=49
-[ANALYTICS] payment_link_opened | plan=Starter price=12.50
-```
+### Events tracked
 
-**Events tracked:**
+| Event | When it fires | Properties |
+|---|---|---|
+| `checkout_form_opened` | Visitor clicks a pricing tier button | `plan`, `price` |
+| `checkout_form_submitted` | Visitor submits name + email in the checkout modal | `plan`, `price` |
+| `payment_link_opened` | Payment link received — visitor redirected to checkout | `plan`, `price` |
 
-| Event | When it fires |
-|---|---|
-| `checkout_form_opened` | Visitor clicks a pricing tier button |
-| `checkout_form_submitted` | Visitor fills in name/email and clicks "Doorgaan naar betaling" |
-| `payment_link_opened` | Payment link received — visitor is redirected to checkout |
+### What you get in PostHog
 
-> **Note:** These events also call `track()` from `@vercel/analytics`. Those calls are silently ignored on the free Hobby plan but will automatically appear in the Vercel Analytics → Events tab if you ever upgrade to Pro.
+- **Events** — every event with properties, timestamps, user IDs, and geo data
+- **Funnels** — see exactly where users drop off (e.g. opened form → submitted → paid)
+- **A/B testing** — test different pricing layouts, copy, or offers; PostHog handles the statistics
+- **Session recordings** — watch real user sessions to understand behaviour
+- **Retention & cohorts** — track which plan users churn, which stick
+- All of this scales to 1000s of users without any code changes

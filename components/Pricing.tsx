@@ -1,7 +1,7 @@
 'use client';
 
 import { useState } from 'react';
-import { track } from '@vercel/analytics';
+import posthog from 'posthog-js';
 
 type Plan = { name: string; buttonname: string; price: string; badge: string; description: string; features: string[]; highlighted: boolean };
 
@@ -13,26 +13,8 @@ export default function Pricing() {
   const [customerName, setCustomerName] = useState('');
   const [customerEmail, setCustomerEmail] = useState('');
 
-  function logEvent(event: string, properties: Record<string, string>) {
-    // Also log to /api/track so events appear in Vercel's free Runtime Logs
-    // (Dashboard → your project → Logs tab — no Pro plan required).
-    // Uses sendBeacon where available so the request survives page navigation.
-    const payload = JSON.stringify({ event, properties });
-    if (typeof navigator !== 'undefined' && navigator.sendBeacon) {
-      navigator.sendBeacon('/api/track', new Blob([payload], { type: 'application/json' }));
-    } else {
-      fetch('/api/track', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: payload,
-      }).catch(() => {});
-    }
-  }
-
   function openCheckoutForm(plan: Plan) {
-    console.log('[Checkout] User initiated checkout for plan:', plan.name, '— €' + plan.price + '/maand');
-    track('checkout_form_opened', { plan: plan.name, price: plan.price });
-    logEvent('checkout_form_opened', { plan: plan.name, price: plan.price });
+    posthog.capture('checkout_form_opened', { plan: plan.name, price: plan.price });
     setSelectedPlan(plan);
     setCustomerName('');
     setCustomerEmail('');
@@ -47,10 +29,7 @@ export default function Pricing() {
     e.preventDefault();
     if (!selectedPlan) return;
 
-    // NOTE: Logging name and email to console as requested (replace with API call when available)
-    console.log('[Checkout] Customer details collected:', { name: customerName, email: customerEmail, plan: selectedPlan.name });
-    await track('checkout_form_submitted', { plan: selectedPlan.name, price: selectedPlan.price });
-    logEvent('checkout_form_submitted', { plan: selectedPlan.name, price: selectedPlan.price });
+    posthog.capture('checkout_form_submitted', { plan: selectedPlan.name, price: selectedPlan.price });
 
     closeCheckoutForm();
     await handleCheckout(selectedPlan);
@@ -73,8 +52,7 @@ export default function Pricing() {
       if (!res.ok || !data.redirectUrl) {
         setError(data.error ?? 'Betaling starten mislukt. Probeer het opnieuw.');
       } else {
-        track('payment_link_opened', { plan: plan.name, price: plan.price });
-        logEvent('payment_link_opened', { plan: plan.name, price: plan.price });
+        posthog.capture('payment_link_opened', { plan: plan.name, price: plan.price });
         window.location.href = data.redirectUrl;
       }
     } catch {
