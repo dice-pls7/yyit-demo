@@ -6,7 +6,6 @@ import { useEffect } from 'react';
 
 export default function PostHogProvider({ children }: { children: React.ReactNode }) {
   const key = process.env.NEXT_PUBLIC_POSTHOG_KEY;
-  const host = process.env.NEXT_PUBLIC_POSTHOG_HOST ?? 'https://eu.i.posthog.com';
 
   useEffect(() => {
     if (!key) {
@@ -18,13 +17,14 @@ export default function PostHogProvider({ children }: { children: React.ReactNod
 
     if (!posthog.__loaded) {
       posthog.init(key, {
-        api_host: host,
+        api_host: '/ingest',
+        ui_host: process.env.NEXT_PUBLIC_POSTHOG_HOST,
         capture_pageview: true,
         capture_pageleave: true,
         persistence: 'localStorage',
       });
     }
-  }, [key, host]);
+  }, [key]);
 
   if (!key) return <>{children}</>;
 
