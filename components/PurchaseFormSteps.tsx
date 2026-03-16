@@ -1,6 +1,7 @@
 'use client';
 
 import { useState } from 'react';
+import posthog from 'posthog-js';
 import type { BillingCycle, Plan } from './pricing-types';
 
 type PurchaseFormStepsProps = {
@@ -157,7 +158,18 @@ export default function PurchaseFormSteps({ plan, billingCycle, onClose, onSubmi
 
             <button
               type="button"
-              onClick={() => { if (canProceed) setStep(2); }}
+              onClick={() => {
+                if (canProceed) {
+                  posthog.capture('checkout_step_advanced', {
+                    plan: plan.name,
+                    billingCycle,
+                    quantity,
+                    from_step: 1,
+                    to_step: 2,
+                  });
+                  setStep(2);
+                }
+              }}
               disabled={!canProceed}
               className="w-full py-3 rounded-xl font-semibold bg-gradient-to-r from-cyan-500 to-blue-600 text-white hover:from-cyan-400 hover:to-blue-500 shadow-lg shadow-cyan-500/25 transition-all duration-300 disabled:opacity-50 disabled:cursor-not-allowed"
             >
