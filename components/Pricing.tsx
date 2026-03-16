@@ -95,7 +95,7 @@ export default function Pricing() {
     {
       name: 'Starter',
       buttonname: 'Gemak',
-      monthlyPrice: 14.99,   // Prijs /maand bij maandelijkse facturering
+      monthlyPrice: 14.95,   // Prijs /maand bij maandelijkse facturering
       yearlyMonthlyPrice: 12.45, // Prijs /maand bij jaarlijkse facturering (149.99/12)
       badge: 'Beste keus voor ZZP\'ers',
       description: 'Perfect voor zelfstandigen die betrouwbare IT-ondersteuning nodig hebben',
@@ -111,13 +111,14 @@ export default function Pricing() {
     {
       name: 'Compleet',
       buttonname: 'Rust',
-      monthlyPrice: 44.99,   // Prijs /maand bij maandelijkse facturering
-      yearlyMonthlyPrice: 37.5, // Prijs /maand bij jaarlijkse facturering (450/12)
+      monthlyPrice: 44.95,   // Prijs /maand bij maandelijkse facturering
+      yearlyMonthlyPrice: 37.45, // Prijs /maand bij jaarlijkse facturering (450/12)
       badge: 'Meestgekozen',
       description: 'Ideaal voor kleine teams die complete IT-beveiliging willen',
       features: [
         'Proactieve 24/7 monitoring',
         'Automatisch patchbeheer',
+        '2TB back-up opslag',
         'Geavanceerde antivirus + firewall',
         'Prioriteit helpdesk ondersteuning',
         'Remote monitoring & management'
@@ -127,13 +128,14 @@ export default function Pricing() {
     {
       name: 'Premium',
       buttonname: 'Volledige Ontzorging',
-      monthlyPrice: 59.99,  // Prijs /maand bij maandelijkse facturering
-      yearlyMonthlyPrice: 49.99, // Prijs /maand bij jaarlijkse facturering (600/12)
+      monthlyPrice: 59.95,  // Prijs /maand bij maandelijkse facturering
+      yearlyMonthlyPrice: 49.95, // Prijs /maand bij jaarlijkse facturering (600/12)
       badge: 'Geschikt voor grote organisaties',
       description: 'Enterprise-grade beveiliging voor groeiende bedrijven',
       features: [
         'Hoge prioriteit IT-support',
         'Problemen opgelost voordat je het merkt',
+        '2TB back-up opslag',
         'Wij regelen patchbeheer en updates voor je',
         'AI-Aangedreven EDR antivirus',
         'Toegewijde support manager'
