@@ -2,22 +2,41 @@
 
 import { useState } from 'react';
 import posthog from 'posthog-js';
-
-type Plan = { name: string; buttonname: string; price: string; badge: string; description: string; features: string[]; highlighted: boolean };
+import PurchaseFormSteps from './PurchaseFormSteps';
+import type { BillingCycle, Plan } from './pricing-types';
 
 export default function Pricing() {
   const [loadingPlan, setLoadingPlan] = useState<string | null>(null);
   const [error, setError] = useState('');
+  const [billingCycle, setBillingCycle] = useState<BillingCycle>('monthly');
 
   const [selectedPlan, setSelectedPlan] = useState<Plan | null>(null);
-  const [customerName, setCustomerName] = useState('');
-  const [customerEmail, setCustomerEmail] = useState('');
+
+  const formatPrice = (price: number) =>
+    new Intl.NumberFormat('nl-NL', {
+      minimumFractionDigits: 2,
+      maximumFractionDigits: 2,
+    }).format(price);
+
+  const getAnnualPrice = (plan: Plan) => plan.yearlyMonthlyPrice * 12;
+  const getAnnualSavings = (plan: Plan) => (plan.monthlyPrice * 12) - getAnnualPrice(plan);
+  const getDisplayedMonthlyEquivalent = (plan: Plan) => {
+    if (billingCycle === 'monthly') return plan.monthlyPrice;
+    return plan.yearlyMonthlyPrice;
+  };
+
+  const getCheckoutAmount = (plan: Plan) => {
+    if (billingCycle === 'monthly') return plan.monthlyPrice;
+    return getAnnualPrice(plan);
+  };
 
   function openCheckoutForm(plan: Plan) {
-    posthog.capture('checkout_form_opened', { plan: plan.name, price: plan.price });
+    posthog.capture('checkout_form_opened', {
+      plan: plan.name,
+      billingCycle,
+      price: getCheckoutAmount(plan),
+    });
     setSelectedPlan(plan);
-    setCustomerName('');
-    setCustomerEmail('');
     setError('');
   }
 
@@ -25,17 +44,21 @@ export default function Pricing() {
     setSelectedPlan(null);
   }
 
-  async function handleFormSubmit(e: React.FormEvent) {
-    e.preventDefault();
+  async function handleFormSubmit() {
     if (!selectedPlan) return;
 
-    posthog.capture('checkout_form_submitted', { plan: selectedPlan.name, price: selectedPlan.price });
+    posthog.capture('checkout_form_submitted', {
+      plan: selectedPlan.name,
+      billingCycle,
+      price: getCheckoutAmount(selectedPlan),
+    });
 
     closeCheckoutForm();
     await handleCheckout(selectedPlan);
   }
 
-  async function handleCheckout(plan: { name: string; price: string; description: string }) {
+  async function handleCheckout(plan: Plan) {
+    const checkoutAmount = getCheckoutAmount(plan);
     setLoadingPlan(plan.name);
     setError('');
     try {
@@ -43,16 +66,20 @@ export default function Pricing() {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
-          description: `YYIT ${plan.name} pakket`,
-          price: parseFloat(plan.price),
-          reference: `YYIT-${plan.name.toUpperCase()}-${Date.now()}`,
+          description: `YYIT ${plan.name} pakket (${billingCycle === 'monthly' ? 'maandelijks' : 'jaarlijks'})`,
+          price: checkoutAmount,
+          reference: `YYIT-${plan.name.toUpperCase()}-${billingCycle.toUpperCase()}-${Date.now()}`,
         }),
       });
       const data = await res.json();
       if (!res.ok || !data.redirectUrl) {
         setError(data.error ?? 'Betaling starten mislukt. Probeer het opnieuw.');
       } else {
-        posthog.capture('payment_link_opened', { plan: plan.name, price: plan.price }, { send_instantly: true });
+        posthog.capture(
+          'payment_link_opened',
+          { plan: plan.name, billingCycle, price: checkoutAmount },
+          { send_instantly: true }
+        );
         window.location.href = data.redirectUrl;
       }
     } catch {
@@ -66,7 +93,8 @@ export default function Pricing() {
     {
       name: 'Starter',
       buttonname: 'Gemak',
-      price: '12.50',
+      monthlyPrice: 12.5,
+      yearlyMonthlyPrice: 9.99,
       badge: 'Beste keus voor ZZP\'ers',
       description: 'Perfect voor zelfstandigen die betrouwbare IT-ondersteuning nodig hebben',
       features: [
@@ -81,7 +109,8 @@ export default function Pricing() {
     {
       name: 'Compleet',
       buttonname: 'Rust',
-      price: '49',
+      monthlyPrice: 49,
+      yearlyMonthlyPrice: 39.99,
       badge: 'Meestgekozen',
       description: 'Ideaal voor kleine teams die complete IT-beveiliging willen',
       features: [
@@ -96,7 +125,8 @@ export default function Pricing() {
     {
       name: 'Premium',
       buttonname: 'Volledige Ontzorging',
-      price: '99',
+      monthlyPrice: 99,
+      yearlyMonthlyPrice: 79.99,
       badge: 'Geschikt voor grote organisaties',
       description: 'Enterprise-grade beveiliging voor groeiende bedrijven',
       features: [
@@ -126,8 +156,38 @@ export default function Pricing() {
             </span>
           </h2>
           <p className="text-xl text-slate-400 max-w-2xl mx-auto">
-            Kies het pakket dat bij jouw behoeften past. Alle prijzen zijn per maand.
+            Kies het pakket dat bij jouw behoeften past en selecteer direct je betaaltermijn.
           </p>
+
+          <div className="inline-flex items-center p-1 rounded-full border border-slate-700 bg-slate-900/80">
+            <button
+              type="button"
+              onClick={() => setBillingCycle('monthly')}
+              className={`px-4 py-2 text-sm font-medium rounded-full transition-colors ${
+                billingCycle === 'monthly'
+                  ? 'bg-cyan-500 text-white shadow-lg shadow-cyan-500/30'
+                  : 'text-slate-300 hover:text-white'
+              }`}
+              aria-pressed={billingCycle === 'monthly'}
+            >
+              Maandelijks
+            </button>
+            <button
+              type="button"
+              onClick={() => setBillingCycle('yearly')}
+              className={`px-4 py-2 text-sm font-medium rounded-full transition-colors ${
+                billingCycle === 'yearly'
+                  ? 'bg-cyan-500 text-white shadow-lg shadow-cyan-500/30'
+                  : 'text-slate-300 hover:text-white'
+              }`}
+              aria-pressed={billingCycle === 'yearly'}
+            >
+              Jaarlijks
+            </button>
+            <span className="ml-2 mr-2 px-2 py-1 text-xs font-semibold text-emerald-300 bg-emerald-500/10 border border-emerald-500/30 rounded-full">
+              Jaarvoordeel
+            </span>
+          </div>
         </div>
 
         {/* Pricing Cards */}
@@ -159,9 +219,22 @@ export default function Pricing() {
                 </div>
 
                 <div className="flex items-baseline gap-2">
-                  <span className="text-5xl font-bold text-white">€{plan.price}</span>
+                  <span className="text-5xl font-bold text-white">€{formatPrice(getDisplayedMonthlyEquivalent(plan))}</span>
                   <span className="text-slate-400">/ maand</span>
                 </div>
+
+                {billingCycle === 'yearly' ? (
+                  <div className="space-y-1">
+                    <p className="text-xs text-emerald-300">
+                      Jaarlijks gefactureerd: €{formatPrice(getAnnualPrice(plan))} per jaar
+                    </p>
+                    <p className="text-xs text-emerald-200">
+                      U bespaart €{formatPrice(getAnnualSavings(plan))} per jaar
+                    </p>
+                  </div>
+                ) : (
+                  <p className="text-xs text-slate-500">Maandelijks opzegbaar</p>
+                )}
 
                 <p className="text-slate-400 text-sm">{plan.description}</p>
               </div>
@@ -215,67 +288,12 @@ export default function Pricing() {
 
       {/* Checkout Details Modal */}
       {selectedPlan && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/70 backdrop-blur-sm px-4">
-          <div className="relative w-full max-w-md rounded-2xl bg-slate-900 border border-slate-700 p-8 shadow-2xl">
-            <button
-              onClick={closeCheckoutForm}
-              className="absolute top-4 right-4 text-slate-400 hover:text-white transition-colors"
-              aria-label="Sluiten"
-            >
-              <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
-                <path fillRule="evenodd" d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z" clipRule="evenodd" />
-              </svg>
-            </button>
-
-            <h3 className="text-xl font-bold text-white mb-1">Bijna klaar!</h3>
-            <p className="text-slate-400 text-sm mb-6">
-              Vul je gegevens in om door te gaan met het <span className="text-cyan-400 font-medium">{selectedPlan.name}</span> pakket (€{selectedPlan.price}/maand).
-            </p>
-
-            <form onSubmit={handleFormSubmit} className="space-y-4">
-              <div>
-                <label htmlFor="checkout-name" className="block text-sm font-medium text-slate-300 mb-1">
-                  Naam
-                </label>
-                <input
-                  id="checkout-name"
-                  type="text"
-                  autoComplete="name"
-                  name='fullname'
-                  required
-                  value={customerName}
-                  onChange={e => setCustomerName(e.target.value)}
-                  placeholder="Jan de Vries"
-                  className="w-full px-4 py-3 rounded-xl bg-slate-800 border border-slate-700 text-white placeholder-slate-500 text-sm focus:outline-none focus:border-cyan-500/60 focus:ring-1 focus:ring-cyan-500/30 transition-colors"
-                />
-              </div>
-
-              <div>
-                <label htmlFor="checkout-email" className="block text-sm font-medium text-slate-300 mb-1">
-                  E-mailadres
-                </label>
-                <input
-                  id="checkout-email"
-                  type="email"
-                  autoComplete="email"
-                  name='email'
-                  required
-                  value={customerEmail}
-                  onChange={e => setCustomerEmail(e.target.value)}
-                  placeholder="jouw@bedrijf.nl"
-                  className="w-full px-4 py-3 rounded-xl bg-slate-800 border border-slate-700 text-white placeholder-slate-500 text-sm focus:outline-none focus:border-cyan-500/60 focus:ring-1 focus:ring-cyan-500/30 transition-colors"
-                />
-              </div>
-
-              <button
-                type="submit"
-                className="w-full py-3 rounded-xl font-semibold bg-gradient-to-r from-cyan-500 to-blue-600 text-white hover:from-cyan-400 hover:to-blue-500 shadow-lg shadow-cyan-500/25 transition-all duration-300"
-              >
-                Doorgaan naar betaling
-              </button>
-            </form>
-          </div>
-        </div>
+        <PurchaseFormSteps
+          plan={selectedPlan}
+          billingCycle={billingCycle}
+          onClose={closeCheckoutForm}
+          onSubmit={handleFormSubmit}
+        />
       )}
     </section>
   );
