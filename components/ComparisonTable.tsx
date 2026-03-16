@@ -59,9 +59,9 @@ export default function ComparisonTable() {
     {
       name: 'Back-up opslag',
       tooltip: 'Hoeveelheid opslagruimte voor automatische back-ups van je bestanden en systemen.',
-      starter: '1GB',
-      compleet: '10GB',
-      premium: '100GB',
+      starter: '100GB', //hoeveel moet hier komen? 
+      compleet: '2TB',
+      premium: '2TB',
     },
     {
       name: 'Ondersteuning op locatie',
