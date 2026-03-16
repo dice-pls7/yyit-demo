@@ -28,7 +28,7 @@ export default function Solutions() {
       ),
       title: 'Data Back-up & Recovery',
       description: 'Verlies nooit meer kritische data. Wij zorgen voor automatische back-ups, snel herstel en naleving van internationale standaarden.',
-      features: ['Automatische back-ups', 'Herstel van systemen en bestanden', 'Geen zorgen over dataverlies']
+      features: ['Automatische back-ups t/m 2TB', 'Herstel van systemen en bestanden', 'Geen zorgen over dataverlies']
     },
     // {
     //   icon: (
