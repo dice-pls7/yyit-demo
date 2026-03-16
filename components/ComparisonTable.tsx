@@ -70,6 +70,25 @@ export default function ComparisonTable() {
       compleet: false,
       premium: true,
     },
+    {
+      name: 'Maandelijks rapport',
+      tooltip: 'Een overzicht van de beveiligingsstatus, uitgevoerde updates en eventuele incidenten van de afgelopen maand.',
+      starter: false,
+      compleet: true,
+      premium: true,
+    },
+    {name: 'Compliance checks', 
+     tooltip: 'We controleren of je IT-omgeving voldoet aan relevante wet- en regelgeving, zoals AVG.', 
+     starter: false, 
+     compleet: false, 
+     premium: true},
+    {
+      name: 'Cybersecurity verzekering',
+      tooltip: 'Een verzekering die je beschermt tegen financiële verliezen als gevolg van cyberaanvallen en datalekken.',
+      starter: false,
+      compleet: false,
+      premium: true,
+    },
   ];
 
   const renderCell = (value: boolean | string) => {
@@ -108,8 +127,8 @@ export default function ComparisonTable() {
           </p>
         </div>
 
-        {/* Scrollable Container for Mobile */}
-        <div className="overflow-x-auto scrollbar-thin scrollbar-thumb-cyan-500/20 scrollbar-track-slate-800/50">
+        {/* Table Container: overflow-x-auto alleen op mobiel */}
+        <div className="overflow-x-auto md:overflow-x-visible scrollbar-thin scrollbar-thumb-cyan-500/20 scrollbar-track-slate-800/50">
           <div className="min-w-[640px]">
             {/* Table — overflow-visible so tooltips can escape the container */}
             <div className="bg-slate-900/50 border border-slate-800 rounded-2xl backdrop-blur-sm">
@@ -125,11 +144,11 @@ export default function ComparisonTable() {
                     Meestgekozen
                   </div>
                   <div className="text-white font-bold">Compleet</div>
-                  <div className="text-cyan-400 text-sm mt-1">€49/mnd</div>
+                  <div className="text-cyan-400 text-sm mt-1">€37,50/mnd</div>
                 </div>
                 <div className="text-center">
                   <div className="text-white font-bold">Premium</div>
-                  <div className="text-cyan-400 text-sm mt-1">€99/mnd</div>
+                  <div className="text-cyan-400 text-sm mt-1">€49,99/mnd</div>
                 </div>
               </div>
 
