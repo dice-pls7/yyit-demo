@@ -112,7 +112,7 @@ export default function Pricing() {
       name: 'Compleet',
       buttonname: 'Rust',
       monthlyPrice: 49,
-      yearlyMonthlyPrice: 39.99,
+      yearlyMonthlyPrice: 38.99,
       badge: 'Meestgekozen',
       description: 'Ideaal voor kleine teams die complete IT-beveiliging willen',
       features: [
