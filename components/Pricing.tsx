@@ -166,7 +166,7 @@ export default function Pricing() {
           <div className="inline-flex items-center p-1 rounded-full border border-slate-700 bg-slate-900/80">
             <button
               type="button"
-              onClick={() => setBillingCycle('monthly')}
+              onClick={() => { setBillingCycle('monthly'); posthog.capture('billing_cycle_changed', { cycle: 'monthly' }); }}
               className={`px-4 py-2 text-sm font-medium rounded-full transition-colors ${
                 billingCycle === 'monthly'
                   ? 'bg-cyan-500 text-white shadow-lg shadow-cyan-500/30'
@@ -178,7 +178,7 @@ export default function Pricing() {
             </button>
             <button
               type="button"
-              onClick={() => setBillingCycle('yearly')}
+              onClick={() => { setBillingCycle('yearly'); posthog.capture('billing_cycle_changed', { cycle: 'yearly' }); }}
               className={`px-4 py-2 text-sm font-medium rounded-full transition-colors ${
                 billingCycle === 'yearly'
                   ? 'bg-cyan-500 text-white shadow-lg shadow-cyan-500/30'
