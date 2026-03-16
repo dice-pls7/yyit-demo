@@ -7,7 +7,7 @@ type PurchaseFormStepsProps = {
   plan: Plan;
   billingCycle: BillingCycle;
   onClose: () => void;
-  onSubmit: () => Promise<void>;
+  onSubmit: (quantity: number) => Promise<void>;
 };
 
 function formatPrice(price: number) {
@@ -32,14 +32,27 @@ function getCheckoutAmount(plan: Plan, billingCycle: BillingCycle) {
 
 export default function PurchaseFormSteps({ plan, billingCycle, onClose, onSubmit }: PurchaseFormStepsProps) {
   const [step, setStep] = useState<1 | 2>(1);
+  const [quantityInput, setQuantityInput] = useState('1');
   const [customerName, setCustomerName] = useState('');
   const [customerEmail, setCustomerEmail] = useState('');
 
-  const checkoutAmount = getCheckoutAmount(plan, billingCycle);
+  const quantity = Math.max(1, parseInt(quantityInput, 10) || 0);
+  const unitPrice = getCheckoutAmount(plan, billingCycle);
+  const checkoutAmount = unitPrice * quantity;
+
+  function handleQuantityChange(raw: string) {
+    if (/^\d*$/.test(raw)) setQuantityInput(raw);
+  }
+
+  function handleQuantityBlur() {
+    if (!quantityInput || parseInt(quantityInput, 10) < 1) setQuantityInput('1');
+  }
+
+  const canProceed = parseInt(quantityInput, 10) >= 1;
 
   async function handleSubmit(e: React.FormEvent) {
     e.preventDefault();
-    await onSubmit();
+    await onSubmit(quantity);
   }
 
   return (
@@ -88,13 +101,47 @@ export default function PurchaseFormSteps({ plan, billingCycle, onClose, onSubmi
                 <span className="text-slate-400">Pakket</span>
                 <span className="text-white font-medium">{plan.name}</span>
               </div>
+              <div className="flex items-center justify-between text-sm">
+                <span className="text-slate-400">Aantal werkstations</span>
+                <div className="flex items-center gap-2">
+                  <button
+                    type="button"
+                    onClick={() => setQuantityInput(q => String(Math.max(1, (parseInt(q, 10) || 1) - 1)))}
+                    className="w-8 h-8 flex items-center justify-center rounded-lg bg-slate-700 hover:bg-slate-600 text-white font-medium transition-colors disabled:opacity-40"
+                    disabled={quantity <= 1}
+                    aria-label="Minder"
+                  >
+                    –
+                  </button>
+                  <input
+                    type="text"
+                    inputMode="numeric"
+                    value={quantityInput}
+                    onChange={e => handleQuantityChange(e.target.value)}
+                    onBlur={handleQuantityBlur}
+                    className="w-14 text-center bg-slate-800 border border-slate-600 rounded-lg py-1 text-white text-sm focus:outline-none focus:border-cyan-500/60 focus:ring-1 focus:ring-cyan-500/30"
+                  />
+                  <button
+                    type="button"
+                    onClick={() => setQuantityInput(q => String((parseInt(q, 10) || 0) + 1))}
+                    className="w-8 h-8 flex items-center justify-center rounded-lg bg-slate-700 hover:bg-slate-600 text-white font-medium transition-colors"
+                    aria-label="Meer"
+                  >
+                    +
+                  </button>
+                </div>
+              </div>
               <div className="flex justify-between text-sm">
                 <span className="text-slate-400">Betaaltermijn</span>
                 <span className="text-white font-medium">
                   {billingCycle === 'monthly' ? 'Maandelijks' : 'Jaarlijks (jaarvoordeel)'}
                 </span>
               </div>
-              <div className="flex justify-between text-sm border-t border-slate-700 pt-3">
+              <div className="flex justify-between text-xs text-slate-500 border-t border-slate-700 pt-3">
+                <span>{billingCycle === 'monthly' ? 'Prijs per werkstation / maand' : 'Prijs per werkstation / jaar'}</span>
+                <span>EUR {formatPrice(unitPrice)}</span>
+              </div>
+              <div className="flex justify-between text-sm font-medium">
                 <span className="text-slate-300">
                   {billingCycle === 'monthly' ? 'Totaal per maand' : 'Totaal per jaar'}
                 </span>
@@ -103,15 +150,16 @@ export default function PurchaseFormSteps({ plan, billingCycle, onClose, onSubmi
               {billingCycle === 'yearly' && (
                 <div className="flex justify-between text-sm">
                   <span className="text-emerald-300">U bespaart per jaar</span>
-                  <span className="text-emerald-200 font-semibold">EUR {formatPrice(getAnnualSavings(plan))}</span>
+                  <span className="text-emerald-200 font-semibold">EUR {formatPrice(getAnnualSavings(plan) * quantity)}</span>
                 </div>
               )}
             </div>
 
             <button
               type="button"
-              onClick={() => setStep(2)}
-              className="w-full py-3 rounded-xl font-semibold bg-gradient-to-r from-cyan-500 to-blue-600 text-white hover:from-cyan-400 hover:to-blue-500 shadow-lg shadow-cyan-500/25 transition-all duration-300"
+              onClick={() => { if (canProceed) setStep(2); }}
+              disabled={!canProceed}
+              className="w-full py-3 rounded-xl font-semibold bg-gradient-to-r from-cyan-500 to-blue-600 text-white hover:from-cyan-400 hover:to-blue-500 shadow-lg shadow-cyan-500/25 transition-all duration-300 disabled:opacity-50 disabled:cursor-not-allowed"
             >
               Ga naar stap 2
             </button>

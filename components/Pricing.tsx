@@ -44,21 +44,23 @@ export default function Pricing() {
     setSelectedPlan(null);
   }
 
-  async function handleFormSubmit() {
+  async function handleFormSubmit(quantity: number) {
     if (!selectedPlan) return;
 
+    const total = getCheckoutAmount(selectedPlan) * quantity;
     posthog.capture('checkout_form_submitted', {
       plan: selectedPlan.name,
       billingCycle,
-      price: getCheckoutAmount(selectedPlan),
+      quantity,
+      price: total,
     });
 
     closeCheckoutForm();
-    await handleCheckout(selectedPlan);
+    await handleCheckout(selectedPlan, quantity);
   }
 
-  async function handleCheckout(plan: Plan) {
-    const checkoutAmount = getCheckoutAmount(plan);
+  async function handleCheckout(plan: Plan, quantity: number) {
+    const checkoutAmount = getCheckoutAmount(plan) * quantity;
     setLoadingPlan(plan.name);
     setError('');
     try {
@@ -66,7 +68,7 @@ export default function Pricing() {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
-          description: `YYIT ${plan.name} pakket (${billingCycle === 'monthly' ? 'maandelijks' : 'jaarlijks'})`,
+          description: `YYIT ${plan.name} pakket (${billingCycle === 'monthly' ? 'maandelijks' : 'jaarlijks'}) – ${quantity} werkstation${quantity !== 1 ? 's' : ''}`,
           price: checkoutAmount,
           reference: `YYIT-${plan.name.toUpperCase()}-${billingCycle.toUpperCase()}-${Date.now()}`,
         }),
@@ -77,7 +79,7 @@ export default function Pricing() {
       } else {
         posthog.capture(
           'payment_link_opened',
-          { plan: plan.name, billingCycle, price: checkoutAmount },
+          { plan: plan.name, billingCycle, quantity, price: checkoutAmount },
           { send_instantly: true }
         );
         window.location.href = data.redirectUrl;
