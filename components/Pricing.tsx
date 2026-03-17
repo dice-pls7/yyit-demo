@@ -3,7 +3,7 @@
 import { useState } from 'react';
 import posthog from 'posthog-js';
 import PurchaseFormSteps from './PurchaseFormSteps';
-import type { BillingCycle, Plan } from './pricing-types';
+import type { BillingCycle, CheckoutSubmission, Plan } from './pricing-types';
 
 export default function Pricing() {
   const [loadingPlan, setLoadingPlan] = useState<string | null>(null);
@@ -44,23 +44,25 @@ export default function Pricing() {
     setSelectedPlan(null);
   }
 
-  async function handleFormSubmit(quantity: number) {
+  async function handleFormSubmit(submission: CheckoutSubmission) {
     if (!selectedPlan) return;
 
-    const total = getCheckoutAmount(selectedPlan) * quantity;
+    const total = getCheckoutAmount(selectedPlan) * submission.quantity;
     posthog.capture('checkout_form_submitted', {
       plan: selectedPlan.name,
       billingCycle,
-      quantity,
+      quantity: submission.quantity,
+      company_name: submission.company.name,
+      kvk_number: submission.company.kvkNumber,
       price: total,
     });
 
     closeCheckoutForm();
-    await handleCheckout(selectedPlan, quantity);
+    await handleCheckout(selectedPlan, submission);
   }
 
-  async function handleCheckout(plan: Plan, quantity: number) {
-    const checkoutAmount = getCheckoutAmount(plan) * quantity;
+  async function handleCheckout(plan: Plan, submission: CheckoutSubmission) {
+    const checkoutAmount = getCheckoutAmount(plan) * submission.quantity;
     setLoadingPlan(plan.name);
     setError('');
     try {
@@ -68,9 +70,13 @@ export default function Pricing() {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
-          description: `YYIT ${plan.name} pakket (${billingCycle === 'monthly' ? 'maandelijks' : 'jaarlijks'}) – ${quantity} werkstation${quantity !== 1 ? 's' : ''}`,
+          description: `YYIT ${plan.name} pakket (${billingCycle === 'monthly' ? 'maandelijks' : 'jaarlijks'}) - ${submission.quantity} werkstation${submission.quantity !== 1 ? 's' : ''} - ${submission.company.name} (KVK ${submission.company.kvkNumber})`,
           price: checkoutAmount,
           reference: `YYIT-${plan.name.toUpperCase()}-${billingCycle.toUpperCase()}-${Date.now()}`,
+          companyName: submission.company.name,
+          kvkNumber: submission.company.kvkNumber,
+          customerName: submission.customerName,
+          customerEmail: submission.customerEmail,
         }),
       });
       const data = await res.json();
@@ -79,7 +85,14 @@ export default function Pricing() {
       } else {
         posthog.capture(
           'payment_link_opened',
-          { plan: plan.name, billingCycle, quantity, price: checkoutAmount },
+          {
+            plan: plan.name,
+            billingCycle,
+            quantity: submission.quantity,
+            company_name: submission.company.name,
+            kvk_number: submission.company.kvkNumber,
+            price: checkoutAmount,
+          },
           { send_instantly: true }
         );
         window.location.href = data.redirectUrl;
