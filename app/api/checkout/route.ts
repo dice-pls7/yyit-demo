@@ -38,6 +38,7 @@ export async function POST(req: NextRequest) {
       return NextResponse.json({ error: 'Ongeldig plan' }, { status: 400 });
   }
 
+  price = price * quantity;
 
   const serviceId = process.env.PAYNL_SERVICE_ID;
   const userId = process.env.PAYNL_USER_ID;
