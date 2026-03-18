@@ -1,8 +1,21 @@
 import { NextRequest, NextResponse } from 'next/server';
+import { rateLimit } from '@/lib/rate-limit';
+
+const limiter = rateLimit({ limit: 100, interval: 60_000 }); 
 
 export async function POST(req: NextRequest) {
-  const {planName, billingCycle, quantity } = await req.json();
-  //TODO: hierboven later nog COMPANY NAME  ZODAT JE MENSEN KAN sellen
+  const ip = req.headers.get('x-forwarded-for')?.split(',')[0]?.trim() ?? 'unknown';
+  if (!limiter.check(ip).success) {
+    return NextResponse.json({ error: 'Te veel verzoeken. Probeer het later opnieuw.' }, { status: 429 });
+  }
+
+  let parsed: { planName?: string; billingCycle?: string; quantity?: number };
+  try {
+    parsed = await req.json();
+  } catch {
+    return NextResponse.json({ error: 'Ongeldig verzoek.' }, { status: 400 });
+  }
+  const { planName, billingCycle, quantity } = parsed;
 
   if (!planName || !billingCycle || quantity === undefined) {
     return NextResponse.json({ error: 'Ongeldige invoer' }, { status: 400 });
@@ -18,7 +31,7 @@ export async function POST(req: NextRequest) {
   const description = `${planName} (${billingCycle === 'monthly' ? 'maand' : 'jaar'}) - ${quantity} station${quantity !== 1 ? 's' : ''}`;
   let price = 0;
   const pricingplans = {
-    Starter: { monthly: 14.45},
+    Starter: { monthly: 14.95 },
     Compleet: { monthly: 44.95 },
     Premium: { monthly: 59.95 },
   };
@@ -81,7 +94,7 @@ export async function POST(req: NextRequest) {
   const data = await response.json();
 
   if (!response.ok) {
-    console.error('Pay.nl error:', data);
+    console.error('Pay.nl error:', response.status, data?.type ?? 'unknown');
     return NextResponse.json({ error: 'Betaalpagina kon niet worden geladen' }, { status: 500 });
   }
 

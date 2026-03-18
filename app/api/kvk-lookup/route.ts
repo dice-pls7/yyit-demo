@@ -1,4 +1,5 @@
 import { NextRequest, NextResponse } from 'next/server';
+import { rateLimit } from '@/lib/rate-limit';
 
 type UnknownRecord = Record<string, unknown>;
 
@@ -112,8 +113,21 @@ function readResultList(raw: unknown): unknown[] {
   return [];
 }
 
+const limiter = rateLimit({ limit: 100, interval: 60_000 }); // 
+
 export async function POST(req: NextRequest) {
-  const { query } = await req.json();
+  const ip = req.headers.get('x-forwarded-for')?.split(',')[0]?.trim() ?? 'unknown';
+  if (!limiter.check(ip).success) {
+    return NextResponse.json({ error: 'Te veel verzoeken. Probeer het later opnieuw.' }, { status: 429 });
+  }
+
+  let body: { query?: unknown };
+  try {
+    body = await req.json();
+  } catch {
+    return NextResponse.json({ error: 'Ongeldig verzoek.' }, { status: 400 });
+  }
+  const { query } = body;
   const companyQuery = typeof query === 'string' ? query.trim() : '';
 
   if (companyQuery.length < 2) {
@@ -165,7 +179,7 @@ export async function POST(req: NextRequest) {
     const raw = await response.json();
 
     if (!response.ok) {
-      console.error('KVK provider error:', raw);
+      console.error('KVK provider error:', response.status);
       return NextResponse.json(
         { error: 'KVK-gegevens konden niet worden opgehaald.' },
         { status: 502 }

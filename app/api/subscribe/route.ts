@@ -1,9 +1,27 @@
 import { NextRequest, NextResponse } from 'next/server';
+import { rateLimit } from '@/lib/rate-limit';
+
+const limiter = rateLimit({ limit: 5, interval: 60_000 });
 
 export async function POST(req: NextRequest) {
-  const { email } = await req.json();
+  const ip = req.headers.get('x-forwarded-for')?.split(',')[0]?.trim() ?? 'unknown';
+  if (!limiter.check(ip).success) {
+    return NextResponse.json({ error: 'Te veel verzoeken. Probeer het later opnieuw.' }, { status: 429 });
+  }
 
-  if (!email || !email.includes('@')) {
+  let body: { email?: unknown };
+  try {
+    body = await req.json();
+  } catch {
+    return NextResponse.json({ error: 'Ongeldig verzoek.' }, { status: 400 });
+  }
+  const { email } = body;
+
+  if (
+    typeof email !== 'string' ||
+    email.length > 254 ||
+    !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)
+  ) {
     return NextResponse.json({ error: 'Ongeldig e-mailadres' }, { status: 400 });
   }
 
