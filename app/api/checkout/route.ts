@@ -1,11 +1,43 @@
 import { NextRequest, NextResponse } from 'next/server';
 
 export async function POST(req: NextRequest) {
-  const { description, price, reference } = await req.json();
+  const {planName, billingCycle, quantity } = await req.json();
+  //TODO: hierboven later nog COMPANY NAME  ZODAT JE MENSEN KAN sellen
 
-  if (!description || !price || !reference) {
+  if (!planName || !billingCycle || quantity === undefined) {
     return NextResponse.json({ error: 'Ongeldige invoer' }, { status: 400 });
   }
+    if (quantity <= 0) {
+    return NextResponse.json({ error: 'Ongeldige hoeveelheid' }, { status: 400 });
+  }
+  if (billingCycle !== 'monthly' && billingCycle !== 'yearly') {
+    return NextResponse.json({ error: 'Ongeldige factureringscyclus' }, { status: 400 });
+  }
+
+  const reference = `YYIT-${planName.toUpperCase()}-${billingCycle.toUpperCase()}-${Date.now()}`;
+  const description = `${planName} (${billingCycle === 'monthly' ? 'maand' : 'jaar'}) - ${quantity} station${quantity !== 1 ? 's' : ''}`;
+  let price = 0;
+  const pricingplans = {
+    Starter: { monthly: 14.45},
+    Compleet: { monthly: 44.95 },
+    Premium: { monthly: 59.95 },
+  };
+
+  
+  switch (planName) {
+    case 'Starter':
+      price = billingCycle === 'monthly' ? pricingplans.Starter.monthly : pricingplans.Starter.monthly * 10; // 2 maanden gratis bij jaarbetaling 
+      break;
+    case 'Compleet':
+      price = billingCycle === 'monthly' ? pricingplans.Compleet.monthly : pricingplans.Compleet.monthly * 10; // 2 maanden gratis bij jaarbetaling 
+      break;
+    case 'Premium':
+      price = billingCycle === 'monthly' ? pricingplans.Premium.monthly : pricingplans.Premium.monthly * 10; // 2 maanden gratis bij jaarbetaling 
+      break;
+    default:
+      return NextResponse.json({ error: 'Ongeldig plan' }, { status: 400 });
+  }
+
 
   const serviceId = process.env.PAYNL_SERVICE_ID;
   const userId = process.env.PAYNL_USER_ID;
@@ -23,7 +55,6 @@ export async function POST(req: NextRequest) {
     serviceId,
     type: 'SINGLE',
     description,
-    reference,
     returnUrl: `${baseUrl}?betaald=1`,
     amount: {
       value: totalCents,

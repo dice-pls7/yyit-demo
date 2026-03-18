@@ -71,8 +71,11 @@ export default function Pricing() {
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
           // description: `YYIT ${plan.name} pakket (${billingCycle === 'monthly' ? 'maandelijks' : 'jaarlijks'}) - ${submission.quantity} werkstation${submission.quantity !== 1 ? 's' : ''} - ${submission.company.name} (KVK ${submission.company.kvkNumber})`,
-          description: `${plan.name} (${billingCycle === 'monthly' ? 'maand' : 'jaar'}) - ${submission.quantity} station${submission.quantity !== 1 ? 's' : ''}`,
-          price: checkoutAmount,
+          // description: `${plan.name} (${billingCycle === 'monthly' ? 'maand' : 'jaar'}) - ${submission.quantity} station${submission.quantity !== 1 ? 's' : ''}`,
+          // price: checkoutAmount,
+          billingCycle: billingCycle,
+          planName: plan.name,
+          quantity: submission.quantity,
           reference: `YYIT-${plan.name.toUpperCase()}-${billingCycle.toUpperCase()}-${Date.now()}`,
           companyName: submission.company.name,
           kvkNumber: submission.company.kvkNumber,
