@@ -7,7 +7,7 @@ export async function POST(req: NextRequest) {
   if (!planName || !billingCycle || quantity === undefined) {
     return NextResponse.json({ error: 'Ongeldige invoer' }, { status: 400 });
   }
-    if (quantity <= 0) {
+    if (quantity <= 0 || quantity > 1665) {
     return NextResponse.json({ error: 'Ongeldige hoeveelheid' }, { status: 400 });
   }
   if (billingCycle !== 'monthly' && billingCycle !== 'yearly') {
@@ -50,7 +50,7 @@ export async function POST(req: NextRequest) {
   }
 
   const base64Auth = Buffer.from(`${userId}:${tokenId}`).toString('base64');
-  const totalCents = Math.round(price * 100);
+  const totalRounded = (price * 100).toFixed(0); // Zorg dat het bedrag altijd 2 decimalen heeft, ook als het een heel getal is
 
   const body = {
     serviceId,
@@ -58,7 +58,7 @@ export async function POST(req: NextRequest) {
     description,
     returnUrl: `${baseUrl}?betaald=1`,
     amount: {
-      value: totalCents,
+      value: totalRounded,
       currency: 'EUR',
     },
     paymentMethod: { id: 10 }, // iDeal

@@ -192,7 +192,9 @@ export default function PurchaseFormSteps({ plan, billingCycle, onClose, onSubmi
                     –
                   </button>
                   <input
-                    type="text"
+                    type="number"
+                    max={1665}
+                    min={1}
                     inputMode="numeric"
                     value={quantityInput}
                     onChange={e => handleQuantityChange(e.target.value)}

@@ -206,7 +206,7 @@ export default function Pricing() {
               Jaarlijks
             </button>
             <span className="ml-2 mr-2 px-2 py-1 text-xs font-semibold text-emerald-300 bg-emerald-500/10 border border-emerald-500/30 rounded-full">
-              Jaarvoordeel
+              Jaarvoordeel (2 maanden gratis!)
             </span>
           </div>
         </div>
