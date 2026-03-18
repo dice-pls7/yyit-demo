@@ -70,7 +70,8 @@ export default function Pricing() {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
-          description: `YYIT ${plan.name} pakket (${billingCycle === 'monthly' ? 'maandelijks' : 'jaarlijks'}) - ${submission.quantity} werkstation${submission.quantity !== 1 ? 's' : ''} - ${submission.company.name} (KVK ${submission.company.kvkNumber})`,
+          // description: `YYIT ${plan.name} pakket (${billingCycle === 'monthly' ? 'maandelijks' : 'jaarlijks'}) - ${submission.quantity} werkstation${submission.quantity !== 1 ? 's' : ''} - ${submission.company.name} (KVK ${submission.company.kvkNumber})`,
+          description: `${plan.name} (${billingCycle === 'monthly' ? 'maandelijks' : 'jaarlijks'}) - ${submission.quantity} werkstation${submission.quantity !== 1 ? 's' : ''}`,
           price: checkoutAmount,
           reference: `YYIT-${plan.name.toUpperCase()}-${billingCycle.toUpperCase()}-${Date.now()}`,
           companyName: submission.company.name,
