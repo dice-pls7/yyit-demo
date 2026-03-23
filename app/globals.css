@@ -7,6 +7,70 @@
   --foreground: #f1f5f9;
 }
 
+/* ── vanilla-cookieconsent: dark theme overrides ─────────────────────────── */
+#cc-main {
+  --cc-font-family: 'DM Sans', system-ui, -apple-system, sans-serif;
+
+  /* Modal background */
+  --cc-bg: #0f172a;
+
+  /* ✅ CORRECT variable names for text */
+  --cc-primary-color: #f8fafc;           /* title + table headers */
+  --cc-secondary-color: #cbd5e1;         /* description + secondary text */
+  --cc-link-color: #06b6d4;
+
+  /* Category blocks */
+  --cc-cookie-category-block-bg: #1e293b;
+  --cc-cookie-category-block-border: #1e293b;
+  --cc-cookie-category-block-hover-bg: #273549;
+  --cc-cookie-category-block-hover-border: #334155;
+  --cc-section-category-border: #1e293b;
+
+  /* ✅ CORRECT variable names for primary buttons (accept all / save) */
+  --cc-btn-primary-bg: #06b6d4;
+  --cc-btn-primary-color: #020617;
+  --cc-btn-primary-border-color: #06b6d4;
+  --cc-btn-primary-hover-bg: #0891b2;
+  --cc-btn-primary-hover-color: #020617;
+  --cc-btn-primary-hover-border-color: #0891b2;
+
+  /* ✅ CORRECT variable names for secondary buttons (only necessary / show preferences) */
+  --cc-btn-secondary-bg: #1e293b;
+  --cc-btn-secondary-color: #f1f5f9;
+  --cc-btn-secondary-border-color: #334155;
+  --cc-btn-secondary-hover-bg: #273549;
+  --cc-btn-secondary-hover-color: #ffffff;
+  --cc-btn-secondary-hover-border-color: #334155;
+
+  /* Toggle */
+  --cc-toggle-on-bg: #06b6d4;
+  --cc-toggle-off-bg: #334155;
+  --cc-toggle-readonly-bg: #1e293b;
+  --cc-toggle-on-knob-bg: #020617;
+  --cc-toggle-off-knob-bg: #f1f5f9;
+
+  /* Separator */
+  --cc-separator-border-color: #1e293b;
+
+  /* Overlay */
+  --cc-overlay-bg: rgba(2, 6, 23, 0.85);
+
+  /* Footer */
+  --cc-footer-bg: #0c1628;
+  --cc-footer-color: #94a3b8;
+  --cc-footer-border-color: #1e293b;
+
+  /* Radii */
+  --cc-modal-border-radius: 12px;
+  --cc-btn-border-radius: 8px;
+}
+
+/* Make modal stand out against the very dark page background */
+#cc-main .cm {
+  box-shadow: 0 0 0 1px rgba(6, 182, 212, 0.25), 0 24px 48px rgba(0, 0, 0, 0.7) !important;
+}
+/* ─────────────────────────────────────────────────────────────────────────── */
+
 @theme inline {
   --color-background: var(--background);
   --color-foreground: var(--foreground);
