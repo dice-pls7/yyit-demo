@@ -8,7 +8,7 @@ import type { BillingCycle, CheckoutSubmission, Plan } from './pricing-types';
 export default function Pricing() {
   const [loadingPlan, setLoadingPlan] = useState<string | null>(null);
   const [error, setError] = useState('');
-  const [billingCycle, setBillingCycle] = useState<BillingCycle>('monthly');
+  const [billingCycle, setBillingCycle] = useState<BillingCycle>('yearly');
 
   const [selectedPlan, setSelectedPlan] = useState<Plan | null>(null);
 
@@ -112,8 +112,8 @@ export default function Pricing() {
     {
       name: 'Starter',
       buttonname: 'Gemak',
-      monthlyPrice: 14.95,   // Prijs /maand bij maandelijkse facturering
-      yearlyMonthlyPrice: 12.45, // Prijs /maand bij jaarlijkse facturering (149.99/12)
+      monthlyPrice: 17.95,   // Prijs /maand bij maandelijkse facturering
+      yearlyMonthlyPrice: 14.95, // Prijs /maand bij jaarlijkse facturering (149.99/12)
       badge: 'Beste keus voor ZZP\'ers',
       description: 'Perfect voor zelfstandigen die betrouwbare IT-ondersteuning nodig hebben',
       features: [
@@ -128,9 +128,9 @@ export default function Pricing() {
     {
       name: 'Compleet',
       buttonname: 'Rust',
-      monthlyPrice: 49,   // Prijs /maand bij maandelijkse facturering
-      yearlyMonthlyPrice: 37.45, // Prijs /maand bij jaarlijkse facturering (450/12)
-      badge: 'Meestgekozen',
+      monthlyPrice: 59.99,  // Prijs /maand bij maandelijkse facturering
+      yearlyMonthlyPrice: 49.99, // Prijs /maand bij jaarlijkse facturering (599.88/12)   
+      badge: 'Meestgekozen',  
       description: 'Ideaal voor kleine teams die complete IT-beveiliging willen',
       features: [
         'Proactieve 24/7 monitoring',
@@ -145,8 +145,8 @@ export default function Pricing() {
     {
       name: 'Premium',
       buttonname: 'Volledige Ontzorging',
-      monthlyPrice: 99,  // Prijs /maand bij maandelijkse facturering
-      yearlyMonthlyPrice: 79.95, // Prijs /maand bij jaarlijkse facturering (959.40/12)
+      monthlyPrice: 118.79,  // Prijs /maand bij maandelijkse facturering
+      yearlyMonthlyPrice: 99, // Prijs /maand bij jaarlijkse facturering (959.40/12)
       badge: 'Geschikt voor grote organisaties',
       description: 'Enterprise-grade beveiliging voor groeiende bedrijven',
       features: [
@@ -183,18 +183,6 @@ export default function Pricing() {
           <div className="inline-flex items-center p-1 rounded-full border border-slate-700 bg-slate-900/80">
             <button
               type="button"
-              onClick={() => { setBillingCycle('monthly'); posthog.capture('billing_cycle_changed', { cycle: 'monthly' }); }}
-              className={`px-4 py-2 text-sm font-medium rounded-full transition-colors ${
-                billingCycle === 'monthly'
-                  ? 'bg-cyan-500 text-white shadow-lg shadow-cyan-500/30'
-                  : 'text-slate-300 hover:text-white'
-              }`}
-              aria-pressed={billingCycle === 'monthly'}
-            >
-              Maandelijks
-            </button>
-            <button
-              type="button"
               onClick={() => { setBillingCycle('yearly'); posthog.capture('billing_cycle_changed', { cycle: 'yearly' }); }}
               className={`px-4 py-2 text-sm font-medium rounded-full transition-colors ${
                 billingCycle === 'yearly'
@@ -204,6 +192,18 @@ export default function Pricing() {
               aria-pressed={billingCycle === 'yearly'}
             >
               Jaarlijks
+            </button>
+            <button
+              type="button"
+              onClick={() => { setBillingCycle('monthly'); posthog.capture('billing_cycle_changed', { cycle: 'monthly' }); }}
+              className={`px-4 py-2 text-sm font-medium rounded-full transition-colors ${
+                billingCycle === 'monthly'
+                  ? 'bg-cyan-500 text-white shadow-lg shadow-cyan-500/30'
+                  : 'text-slate-300 hover:text-white'
+              }`}
+              aria-pressed={billingCycle === 'monthly'}
+            >
+              Maandelijks
             </button>
             <span className="ml-2 mr-2 px-2 py-1 text-xs font-semibold text-emerald-300 bg-emerald-500/10 border border-emerald-500/30 rounded-full">
               Jaarvoordeel (2 maanden gratis!)
