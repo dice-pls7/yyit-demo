@@ -128,8 +128,8 @@ export default function Pricing() {
     {
       name: 'Compleet',
       buttonname: 'Rust',
-      monthlyPrice: 59.99,  // Prijs /maand bij maandelijkse facturering
-      yearlyMonthlyPrice: 49.99, // Prijs /maand bij jaarlijkse facturering (599.88/12)   
+      monthlyPrice: 59.95,  // Prijs /maand bij maandelijkse facturering
+      yearlyMonthlyPrice: 49.95, // Prijs /maand bij jaarlijkse facturering (599.88/12)   
       badge: 'Meestgekozen',  
       description: 'Ideaal voor kleine teams die complete IT-beveiliging willen',
       features: [
@@ -145,7 +145,7 @@ export default function Pricing() {
     {
       name: 'Premium',
       buttonname: 'Volledige Ontzorging',
-      monthlyPrice: 118.79,  // Prijs /maand bij maandelijkse facturering
+      monthlyPrice: 118.75,  // Prijs /maand bij maandelijkse facturering
       yearlyMonthlyPrice: 99, // Prijs /maand bij jaarlijkse facturering (959.40/12)
       badge: 'Geschikt voor grote organisaties',
       description: 'Enterprise-grade beveiliging voor groeiende bedrijven',
