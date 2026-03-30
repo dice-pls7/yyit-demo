@@ -31,9 +31,9 @@ export async function POST(req: NextRequest) {
   const description = `${planName} (${billingCycle === 'monthly' ? 'maand' : 'jaar'}) - ${quantity} station${quantity !== 1 ? 's' : ''}`;
   let price = 0;
   const pricingplans = {
-    Starter: { monthly: 14.95 },
-    Compleet: { monthly: 44.95 },
-    Premium: { monthly: 59.95 },
+    Starter: { monthly: 17.95 },
+    Compleet: { monthly: 59.99 },
+    Premium: { monthly: 118.79 },
   };
 
   
