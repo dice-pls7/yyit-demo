@@ -49,6 +49,7 @@ export default function ComparisonTable() {
     { name: 'Patches worden door ons geïnstalleerd', starter: false, compleet: true, premium: true },
     { name: '24/7 monitoring', tooltip: 'We bewaken je systemen op verdachte activiteiten en potentiële bedreigingen.', starter: false, compleet: true, premium: true },
     { name: 'Proactieve probleemoplossing', tooltip: 'We lossen problemen op voordat jij ze merkt, zodat jij ongestoord kunt werken.', starter: false, compleet: false, premium: true },
+    { name: 'Vaste accountmanager', tooltip: 'Een toegewijde contactpersoon die je helpt met al je vragen en behoeften.', starter: false, compleet: false, premium: true },
     {
       name: 'IT-support',
       tooltip: 'De maximale tijd waarbinnen je een reactie ontvangt op je IT-vraag of melding.',
@@ -148,7 +149,7 @@ export default function ComparisonTable() {
                 </div>
                 <div className="text-center">
                   <div className="text-white font-bold">Premium</div>
-                  <div className="text-cyan-400 text-sm mt-1">€49,95/mnd</div>
+                  <div className="text-cyan-400 text-sm mt-1">€94,95/mnd</div>
                 </div>
               </div>
 

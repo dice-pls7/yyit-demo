@@ -145,17 +145,17 @@ export default function Pricing() {
     {
       name: 'Premium',
       buttonname: 'Volledige Ontzorging',
-      monthlyPrice: 59.95,  // Prijs /maand bij maandelijkse facturering
-      yearlyMonthlyPrice: 49.95, // Prijs /maand bij jaarlijkse facturering (600/12)
+      monthlyPrice: 94.95,  // Prijs /maand bij maandelijkse facturering
+      yearlyMonthlyPrice: 79.95, // Prijs /maand bij jaarlijkse facturering (959.40/12)
       badge: 'Geschikt voor grote organisaties',
       description: 'Enterprise-grade beveiliging voor groeiende bedrijven',
       features: [
-        'Hoge prioriteit IT-support',
+        'Vaste accountmanager',
+        'Hoogste prioriteit bij support',
         'Problemen opgelost voordat je het merkt',
         '2TB back-up opslag',
         'Wij regelen patchbeheer en updates voor je',
         'AI-Aangedreven EDR antivirus',
-        'Toegewijde support manager'
       ],
       highlighted: false,
     },
