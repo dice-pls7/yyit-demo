@@ -21,7 +21,7 @@ export type Plan = {
   name: string;
   buttonname: string;
   monthlyPrice: number;
-  yearlyMonthlyPrice: number;
+  yearlyPrice: number;
   badge: string;
   description: string;
   features: string[];
