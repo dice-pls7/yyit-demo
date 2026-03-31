@@ -8,7 +8,7 @@ import type { BillingCycle, CheckoutSubmission, Plan } from './pricing-types';
 export default function Pricing() {
   const [loadingPlan, setLoadingPlan] = useState<string | null>(null);
   const [error, setError] = useState('');
-  const [billingCycle, setBillingCycle] = useState<BillingCycle>('yearly');
+  const [billingCycle, setBillingCycle] = useState<BillingCycle>('monthly');
 
   const [selectedPlan, setSelectedPlan] = useState<Plan | null>(null);
 
@@ -18,16 +18,11 @@ export default function Pricing() {
       maximumFractionDigits: 2,
     }).format(price);
 
-  const getAnnualPrice = (plan: Plan) => plan.yearlyMonthlyPrice * 12;
-  const getAnnualSavings = (plan: Plan) => (plan.monthlyPrice * 12) - getAnnualPrice(plan);
-  const getDisplayedMonthlyEquivalent = (plan: Plan) => {
-    if (billingCycle === 'monthly') return plan.monthlyPrice;
-    return plan.yearlyMonthlyPrice;
-  };
+  const getAnnualSavings = (plan: Plan) => (plan.monthlyPrice * 12) - plan.yearlyPrice;
 
   const getCheckoutAmount = (plan: Plan) => {
     if (billingCycle === 'monthly') return plan.monthlyPrice;
-    return getAnnualPrice(plan);
+    return plan.yearlyPrice;
   };
 
   function openCheckoutForm(plan: Plan) {
@@ -112,8 +107,8 @@ export default function Pricing() {
     {
       name: 'Starter',
       buttonname: 'Gemak',
-      monthlyPrice: 17.95,   // Prijs /maand bij maandelijkse facturering
-      yearlyMonthlyPrice: 14.95, // Prijs /maand bij jaarlijkse facturering (149.99/12)
+      monthlyPrice: 14.95,
+      yearlyPrice: 149.4,
       badge: 'Beste keus voor ZZP\'ers',
       description: 'Perfect voor zelfstandigen die betrouwbare IT-ondersteuning nodig hebben',
       features: [
@@ -128,8 +123,8 @@ export default function Pricing() {
     {
       name: 'Compleet',
       buttonname: 'Rust',
-      monthlyPrice: 59.95,  // Prijs /maand bij maandelijkse facturering
-      yearlyMonthlyPrice: 49.95, // Prijs /maand bij jaarlijkse facturering (599.88/12)   
+      monthlyPrice: 49.95,
+      yearlyPrice: 499.40 ,
       badge: 'Meestgekozen',  
       description: 'Ideaal voor kleine teams die complete IT-beveiliging willen',
       features: [
@@ -145,8 +140,8 @@ export default function Pricing() {
     {
       name: 'Premium',
       buttonname: 'Volledige Ontzorging',
-      monthlyPrice: 118.75,  // Prijs /maand bij maandelijkse facturering
-      yearlyMonthlyPrice: 99, // Prijs /maand bij jaarlijkse facturering (959.40/12)
+      monthlyPrice: 99.95,
+      yearlyPrice: 999.40,
       badge: 'Geschikt voor grote organisaties',
       description: 'Enterprise-grade beveiliging voor groeiende bedrijven',
       features: [
@@ -183,18 +178,6 @@ export default function Pricing() {
           <div className="inline-flex items-center p-1 rounded-full border border-slate-700 bg-slate-900/80">
             <button
               type="button"
-              onClick={() => { setBillingCycle('yearly'); posthog.capture('billing_cycle_changed', { cycle: 'yearly' }); }}
-              className={`px-4 py-2 text-sm font-medium rounded-full transition-colors ${
-                billingCycle === 'yearly'
-                  ? 'bg-cyan-500 text-white shadow-lg shadow-cyan-500/30'
-                  : 'text-slate-300 hover:text-white'
-              }`}
-              aria-pressed={billingCycle === 'yearly'}
-            >
-              Jaarlijks
-            </button>
-            <button
-              type="button"
               onClick={() => { setBillingCycle('monthly'); posthog.capture('billing_cycle_changed', { cycle: 'monthly' }); }}
               className={`px-4 py-2 text-sm font-medium rounded-full transition-colors ${
                 billingCycle === 'monthly'
@@ -204,6 +187,18 @@ export default function Pricing() {
               aria-pressed={billingCycle === 'monthly'}
             >
               Maandelijks
+            </button>
+            <button
+              type="button"
+              onClick={() => { setBillingCycle('yearly'); posthog.capture('billing_cycle_changed', { cycle: 'yearly' }); }}
+              className={`px-4 py-2 text-sm font-medium rounded-full transition-colors ${
+                billingCycle === 'yearly'
+                  ? 'bg-cyan-500 text-white shadow-lg shadow-cyan-500/30'
+                  : 'text-slate-300 hover:text-white'
+              }`}
+              aria-pressed={billingCycle === 'yearly'}
+            >
+              Jaarlijks
             </button>
             <span className="ml-2 mr-2 px-2 py-1 text-xs font-semibold text-emerald-300 bg-emerald-500/10 border border-emerald-500/30 rounded-full">
               Jaarvoordeel (2 maanden gratis!)
@@ -240,14 +235,16 @@ export default function Pricing() {
                 </div>
 
                 <div className="flex items-baseline gap-2">
-                  <span className="text-5xl font-bold text-white">€{formatPrice(getDisplayedMonthlyEquivalent(plan))}</span>
-                  <span className="text-slate-400">/ maand</span>
+                  <span className="text-5xl font-bold text-white">
+                    €{billingCycle === 'monthly' ? formatPrice(plan.monthlyPrice) : formatPrice(plan.yearlyPrice)}
+                  </span>
+                  <span className="text-slate-400">{billingCycle === 'monthly' ? '/ maand' : '/ jaar'}</span>
                 </div>
 
                 {billingCycle === 'yearly' ? (
                   <div className="space-y-1">
                     <p className="text-xs text-emerald-300">
-                      Jaarlijks gefactureerd: €{formatPrice(getAnnualPrice(plan))} per jaar
+                      Eenmalig jaarlijks gefactureerd
                     </p>
                     <p className="text-xs text-emerald-200">
                       U bespaart €{formatPrice(getAnnualSavings(plan))} per jaar
