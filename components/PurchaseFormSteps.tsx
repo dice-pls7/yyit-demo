@@ -18,17 +18,13 @@ function formatPrice(price: number) {
   }).format(price);
 }
 
-function getAnnualPrice(plan: Plan) {
-  return plan.yearlyMonthlyPrice * 12;
-}
-
 function getAnnualSavings(plan: Plan) {
-  return (plan.monthlyPrice * 12) - getAnnualPrice(plan);
+  return (plan.monthlyPrice * 12) - plan.yearlyPrice;
 }
 
 function getCheckoutAmount(plan: Plan, billingCycle: BillingCycle) {
   if (billingCycle === 'monthly') return plan.monthlyPrice;
-  return getAnnualPrice(plan);
+  return plan.yearlyPrice;
 }
 
 export default function PurchaseFormSteps({ plan, billingCycle, onClose, onSubmit }: PurchaseFormStepsProps) {
