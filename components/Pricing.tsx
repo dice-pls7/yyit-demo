@@ -216,7 +216,7 @@ export default function Pricing() {
           {plans.map((plan, index) => (
             <div
               key={plan.name}
-              className={`relative rounded-2xl p-8 transition-all duration-500 hover:scale-105 animate-fadeInUp ${
+              className={`relative rounded-2xl p-8 transition-all duration-500 hover:scale-105 animate-fadeInUp flex flex-col ${
                 plan.highlighted
                   ? 'bg-gradient-to-br from-cyan-500/10 to-blue-600/10 border-2 border-cyan-500/50 shadow-2xl shadow-cyan-500/20'
                   : 'bg-slate-900/50 border border-slate-800 hover:border-slate-700'
@@ -261,7 +261,7 @@ export default function Pricing() {
               </div>
 
               {/* Features List */}
-              <ul className="space-y-4 mt-8 mb-8">
+              <ul className="space-y-4 mt-8 mb-8 flex-1">
                 {plan.features.map((feature, idx) => (
                   <li key={idx} className="flex items-start gap-3">
                     <svg
