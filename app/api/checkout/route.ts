@@ -9,15 +9,15 @@ export async function POST(req: NextRequest) {
     return NextResponse.json({ error: 'Te veel verzoeken. Probeer het later opnieuw.' }, { status: 429 });
   }
 
-  let parsed: { planName?: string; billingCycle?: string; quantity?: number };
+  let parsed: { planName?: string; billingCycle?: string; quantity?: number; customerEmail?: string };
   try {
     parsed = await req.json();
   } catch {
     return NextResponse.json({ error: 'Ongeldig verzoek.' }, { status: 400 });
   }
-  const { planName, billingCycle, quantity } = parsed;
+  const { planName, billingCycle, quantity, customerEmail } = parsed;
 
-  if (!planName || !billingCycle || quantity === undefined) {
+  if (!planName || !billingCycle || quantity === undefined || !customerEmail) {
     return NextResponse.json({ error: 'Ongeldige invoer' }, { status: 400 });
   }
     if (quantity <= 0 || quantity > 1665) {
@@ -78,6 +78,9 @@ export async function POST(req: NextRequest) {
     notification: {
       type: 'email',
       recipient: 'support-icarus@amyyon.nl',
+    },
+    customer: {
+      email: customerEmail,
     },
   };
 
