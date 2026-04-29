@@ -67,6 +67,7 @@ export async function POST(req: NextRequest) {
 
   const body = {
     serviceId,
+    reference, // Unieke referentie voor deze transactie Planname en pakket
     type: 'SINGLE',
     description,
     returnUrl: `${baseUrl}?betaald=1`,
