@@ -1,9 +1,9 @@
 import { NextRequest, NextResponse } from 'next/server';
-import { Resend } from 'resend';
+// import { Resend } from 'resend';
 import { rateLimit } from '@/lib/rate-limit';
 
 const limiter = rateLimit({ limit: 5, interval: 60_000 });
-const resend = new Resend(process.env.RESEND_API_KEY);
+// const resend = new Resend(process.env.RESEND_API_KEY);
 
 export async function POST(req: NextRequest) {
   const ip = req.headers.get('x-forwarded-for')?.split(',')[0]?.trim() ?? 'unknown';
@@ -24,23 +24,23 @@ export async function POST(req: NextRequest) {
     return NextResponse.json({ error: 'Naam en e-mail zijn verplicht.' }, { status: 400 });
   }
 
-  const { error } = await resend.emails.send({
-    from: 'YYIT Website <noreply@yyit.nl>',
-    to: 'ict-support@amyyon.nl',
-    subject: `Nieuw contactformulier van ${name}`,
-    text: [
-      `Naam: ${name}`,
-      `E-mail: ${email}`,
-      `Bedrijf: ${company || '-'}`,
-      `Telefoon: ${phone || '-'}`,
-      `Bericht: ${message || '-'}`,
-    ].join('\n'),
-  });
+  // const { error } = await resend.emails.send({
+  //   from: 'YYIT Website <noreply@yyit.nl>',
+  //   to: 'ict-support@amyyon.nl',
+  //   subject: `Nieuw contactformulier van ${name}`,
+  //   text: [
+  //     `Naam: ${name}`,
+  //     `E-mail: ${email}`,
+  //     `Bedrijf: ${company || '-'}`,
+  //     `Telefoon: ${phone || '-'}`,
+  //     `Bericht: ${message || '-'}`,
+  //   ].join('\n'),
+  // });
 
-  if (error) {
-    console.error('Resend error:', error);
-    return NextResponse.json({ error: 'Verzenden mislukt, probeer het later opnieuw.' }, { status: 500 });
-  }
+  // if (error) {
+  //   console.error('Resend error:', error);
+  //   return NextResponse.json({ error: 'Verzenden mislukt, probeer het later opnieuw.' }, { status: 500 });
+  // }
 
   return NextResponse.json({ success: true });
 }
