@@ -9,13 +9,13 @@ export async function POST(req: NextRequest) {
     return NextResponse.json({ error: 'Te veel verzoeken. Probeer het later opnieuw.' }, { status: 429 });
   }
 
-  let parsed: { planName?: string; billingCycle?: string; quantity?: number; customerEmail?: string };
+  let parsed: { planName?: string; billingCycle?: string; quantity?: number; customerEmail?: string; companyName?: string; kvkNumber?: number; customerName?: string };
   try {
     parsed = await req.json();
   } catch {
     return NextResponse.json({ error: 'Ongeldig verzoek.' }, { status: 400 });
   }
-  const { planName, billingCycle, quantity, customerEmail } = parsed;
+  const { planName, billingCycle, quantity, customerEmail, companyName, kvkNumber, customerName } = parsed;
 
   if (!planName || !billingCycle || quantity === undefined || !customerEmail) {
     return NextResponse.json({ error: 'Ongeldige invoer' }, { status: 400 });
@@ -82,6 +82,9 @@ export async function POST(req: NextRequest) {
     },
     customer: {
       email: customerEmail,
+      ...(customerName ? { name: customerName } : {}),
+      ...(companyName ? { company: companyName } : {}),
+      ...(kvkNumber ? { reference: kvkNumber } : {}),
     },
   };
 
