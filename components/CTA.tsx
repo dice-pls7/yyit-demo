@@ -10,11 +10,24 @@ export default function CTA() {
     phone: '',
     message: ''
   });
+  const [status, setStatus] = useState<'idle' | 'loading' | 'success' | 'error'>('idle');
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    // Handle form submission here
-    console.log('Form submitted:', formData);
+    setStatus('loading');
+
+    const res = await fetch('/api/contact', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(formData),
+    });
+
+    if (res.ok) {
+      setStatus('success');
+      setFormData({ name: '', email: '', company: '', phone: '', message: '' });
+    } else {
+      setStatus('error');
+    }
   };
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
@@ -172,17 +185,28 @@ export default function CTA() {
 
               <button
                 type="submit"
-                className="w-full py-4 bg-gradient-to-r from-cyan-500 to-blue-600 text-white rounded-xl font-semibold hover:from-cyan-400 hover:to-blue-500 transition-all duration-300 shadow-xl shadow-cyan-500/25 hover:shadow-cyan-500/40 hover:scale-105 flex items-center justify-center gap-2"
+                disabled={status === 'loading'}
+                className="w-full py-4 bg-gradient-to-r from-cyan-500 to-blue-600 text-white rounded-xl font-semibold hover:from-cyan-400 hover:to-blue-500 transition-all duration-300 shadow-xl shadow-cyan-500/25 hover:shadow-cyan-500/40 hover:scale-105 flex items-center justify-center gap-2 disabled:opacity-60 disabled:cursor-not-allowed disabled:hover:scale-100"
               >
-                Verstuur aanvraag
-                <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M14 5l7 7m0 0l-7 7m7-7H3" />
-                </svg>
+                {status === 'loading' ? 'Versturen...' : 'Verstuur aanvraag'}
+                {status !== 'loading' && (
+                  <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M14 5l7 7m0 0l-7 7m7-7H3" />
+                  </svg>
+                )}
               </button>
 
-              <p className="text-slate-500 text-xs text-center">
-                We nemen binnen 24 uur contact met je op
-              </p>
+              {status === 'success' && (
+                <p className="text-cyan-400 text-sm text-center">Bedankt! We nemen zo snel mogelijk contact met je op.</p>
+              )}
+              {status === 'error' && (
+                <p className="text-red-400 text-sm text-center">Er ging iets mis. Probeer het later opnieuw.</p>
+              )}
+              {status === 'idle' && (
+                <p className="text-slate-500 text-xs text-center">
+                  We nemen binnen 24 uur contact met je op
+                </p>
+              )}
             </form>
           </div>
         </div>
