@@ -1,7 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server';
-import { Resend } from 'resend';
+// import { Resend } from 'resend';
 
-const resend = new Resend(process.env.RESEND_API_KEY);
+// const resend = new Resend(process.env.RESEND_API_KEY);
 
 export async function POST(req: NextRequest) {
   let payload: {
@@ -37,27 +37,27 @@ export async function POST(req: NextRequest) {
     ? `€ ${(order.amount.value / 100).toFixed(2)}`
     : '-';
 
-  const { error } = await resend.emails.send({
-    from: 'YYIT Website <noreply@yyit.nl>',
-    to: 'ict-support@amyyon.nl',
-    subject: `Nieuwe betaling ontvangen – ${reference}`,
-    text: [
-      'Er is een nieuwe betaling ontvangen via yyit.nl.',
-      '',
-      `Referentie:   ${reference}`,
-      `Pakket:       ${description}`,
-      `Bedrag:       ${amount}`,
-      `Klant e-mail: ${customerEmail}`,
-      '',
-      'Neem contact op met de klant om hen te onboarden.',
-    ].join('\n'),
-  });
+  // const { error } = await resend.emails.send({
+  //   from: 'YYIT Website <noreply@yyit.nl>',
+  //   to: 'ict-support@amyyon.nl',
+  //   subject: `Nieuwe betaling ontvangen – ${reference}`,
+  //   text: [
+  //     'Er is een nieuwe betaling ontvangen via yyit.nl.',
+  //     '',
+  //     `Referentie:   ${reference}`,
+  //     `Pakket:       ${description}`,
+  //     `Bedrag:       ${amount}`,
+  //     `Klant e-mail: ${customerEmail}`,
+  //     '',
+  //     'Neem contact op met de klant om hen te onboarden.',
+  //   ].join('\n'),
+  // });
 
-  if (error) {
-    console.error('Resend error:', error);
-    // Still return 200 so Pay.nl does not keep retrying
-    return NextResponse.json({ received: true });
-  }
+  // if (error) {
+  //   console.error('Resend error:', error);
+  //   // Still return 200 so Pay.nl does not keep retrying
+  //   return NextResponse.json({ received: true });
+  // }
 
   return NextResponse.json({ received: true });
 }
