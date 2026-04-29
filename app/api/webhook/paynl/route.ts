@@ -1,8 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { Resend } from 'resend';
 
-const resend = new Resend(process.env.RESEND_API_KEY);
-
 export async function POST(req: NextRequest) {
   let payload: {
     type?: string;
@@ -37,6 +35,12 @@ export async function POST(req: NextRequest) {
     ? `€ ${(order.amount.value / 100).toFixed(2)}`
     : '-';
 
+  if (!process.env.RESEND_API_KEY) {
+    console.error('RESEND_API_KEY is not set');
+    return NextResponse.json({ received: true });
+  }
+
+  const resend = new Resend(process.env.RESEND_API_KEY);
   const { error } = await resend.emails.send({
     from: 'YYIT Website <noreply@yyit.nl>',
     to: 'ict-support@amyyon.nl',
