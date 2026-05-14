@@ -43,12 +43,12 @@ export default function Header() {
 
           {/* CTA Buttons */}
           <div className="hidden md:flex items-center gap-4">
-            <a
+            {/* <a
               href="#contact"
               className="px-5 py-2.5 text-sm font-medium text-slate-300 hover:text-white transition-colors duration-200"
             >
               Contact
-            </a>
+            </a> */}
             <a
               href="#cta"
               className="px-6 py-2.5 bg-gradient-to-r from-rose-500 to-red-600 text-white rounded-lg text-sm font-semibold hover:from-rose-400 to-red-500 transition-all duration-300 shadow-lg shadow-cyan-500/25 hover:shadow-cyan-500/40 hover:scale-105"
