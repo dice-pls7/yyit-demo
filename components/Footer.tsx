@@ -1,14 +1,22 @@
 export default function Footer() {
   const footerLinks = {
+    diensten: [
+      { name: 'IT-beheer MKB', href: '/it-beheer-mkb' },
+      { name: 'IT-beheer uitbesteden', href: '/it-beheer-uitbesteden' },
+      { name: 'Cybersecurity MKB', href: '/cybersecurity-mkb' },
+      { name: 'Managed IT Services', href: '/managed-it-services' },
+      { name: 'Werkplekbeheer', href: '/werkplekbeheer' },
+      { name: 'NIS2 voor het MKB', href: '/nis2-mkb' },
+    ],
     product: [
-      { name: 'Pakketten', href: '#pricing' },
-      { name: 'Oplossingen', href: '#solutions' },
-      { name: 'Prijzen', href: '#pricing' },
-      { name: 'Vergelijk', href: '#pricing' },
+      { name: 'Pakketten', href: '/#pricing' },
+      { name: 'Oplossingen', href: '/#solutions' },
+      { name: 'Prijzen', href: '/#pricing' },
+      { name: 'Vergelijk', href: '/#pricing' },
     ],
     company: [
-      { name: 'Over ons', href: '#about' },
-      { name: 'Partners', href: '#partners' },
+      { name: 'Over ons', href: '/#about' },
+      { name: 'Partners', href: '/#partners' },
       { name: 'Carrière', href: '#' },
       { name: 'Blog', href: '#' },
     ],
@@ -16,7 +24,7 @@ export default function Footer() {
       { name: 'Helpdesk', href: '#' },
       { name: 'Documentatie', href: '#' },
       { name: 'API Status', href: '#' },
-      { name: 'Contact', href: '#cta' },
+      { name: 'Contact', href: '/#cta' },
     ],
     legal: [
       { name: 'Privacy Policy', href: '#' },
@@ -33,7 +41,7 @@ export default function Footer() {
 
       <div className="relative z-10 mx-auto max-w-7xl px-6 lg:px-8 py-16">
         {/* Top Section */}
-        <div className="grid md:grid-cols-2 lg:grid-cols-6 gap-12 mb-16">
+        <div className="grid md:grid-cols-2 lg:grid-cols-8 gap-8 mb-16">
           {/* Brand Column */}
           <div className="lg:col-span-2 space-y-6">
             <div className="flex items-center gap-2">
@@ -74,6 +82,19 @@ export default function Footer() {
           </div>
 
           {/* Links Columns */}
+          <div className="lg:col-span-2">
+            <h3 className="text-white font-semibold mb-4">Diensten</h3>
+            <ul className="space-y-3 grid grid-cols-2 gap-x-4">
+              {footerLinks.diensten.map((link) => (
+                <li key={link.name}>
+                  <a href={link.href} className="text-slate-400 hover:text-cyan-400 text-sm transition-colors">
+                    {link.name}
+                  </a>
+                </li>
+              ))}
+            </ul>
+          </div>
+
           <div>
             <h3 className="text-white font-semibold mb-4">Product</h3>
             <ul className="space-y-3">

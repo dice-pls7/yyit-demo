@@ -1,9 +1,20 @@
 'use client';
 
 import { useState } from 'react';
+import Link from 'next/link';
+
+const diensten = [
+  { href: '/it-beheer-mkb', label: 'IT-beheer MKB', desc: 'Volledig IT-beheer voor het MKB' },
+  { href: '/it-beheer-uitbesteden', label: 'IT-beheer uitbesteden', desc: 'Voordelen en stappenplan' },
+  { href: '/cybersecurity-mkb', label: 'Cybersecurity MKB', desc: 'Bescherm uw bedrijf' },
+  { href: '/managed-it-services', label: 'Managed IT Services', desc: 'Proactief beheer, vaste prijs' },
+  { href: '/werkplekbeheer', label: 'Werkplekbeheer', desc: 'Laptops, pc\'s en mobiel' },
+  { href: '/nis2-mkb', label: 'NIS2 voor het MKB', desc: 'Compliance & regelgeving' },
+];
 
 export default function Header() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+  const [dienstenOpen, setDienstenOpen] = useState(false);
 
   return (
     <header className="fixed top-0 left-0 right-0 z-50 bg-slate-950/80 backdrop-blur-xl border-b border-cyan-500/10">
@@ -11,7 +22,7 @@ export default function Header() {
         <div className="flex h-20 items-center justify-between">
           {/* Logo */}
           <div className="flex items-center">
-            <a href="#" className="flex items-center gap-2 group">
+            <Link href="/" className="flex items-center gap-2 group">
               <div className="w-10 h-10 rounded-lg overflow-hidden transform group-hover:scale-110 transition-transform duration-300">
                 <img
                   src="/Favicon.svg"
@@ -22,21 +33,74 @@ export default function Header() {
                 />
               </div>
               <span className="text-xl font-bold text-white tracking-tight">YYIT</span>
-            </a>
+            </Link>
           </div>
 
           {/* Desktop Navigation */}
           <div className="hidden md:flex items-center gap-8">
-            <a href="#pricing" className="text-slate-300 hover:text-cyan-400 transition-colors duration-200 text-sm font-medium">
+            {/* Diensten dropdown */}
+            <div
+              className="relative"
+              onMouseEnter={() => setDienstenOpen(true)}
+              onMouseLeave={() => setDienstenOpen(false)}
+            >
+              <button
+                className="flex items-center gap-1 text-slate-300 hover:text-cyan-400 transition-colors duration-200 text-sm font-medium"
+                aria-expanded={dienstenOpen}
+                aria-haspopup="true"
+              >
+                Diensten
+                <svg
+                  className={`w-3.5 h-3.5 transition-transform duration-200 ${dienstenOpen ? 'rotate-180' : ''}`}
+                  fill="none"
+                  viewBox="0 0 24 24"
+                  stroke="currentColor"
+                >
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M19 9l-7 7-7-7" />
+                </svg>
+              </button>
+
+              {/* Dropdown panel */}
+              {dienstenOpen && (
+                <div className="absolute top-full left-1/2 -translate-x-1/2 pt-3 w-72">
+                <div className="bg-slate-900 border border-slate-700/60 rounded-2xl shadow-2xl shadow-black/40 overflow-hidden">
+                  <div className="p-2">
+                    {diensten.map((item) => (
+                      <Link
+                        key={item.href}
+                        href={item.href}
+                        className="flex flex-col px-4 py-3 rounded-xl hover:bg-slate-800/70 transition-colors group"
+                      >
+                        <span className="text-white text-sm font-medium group-hover:text-cyan-400 transition-colors">
+                          {item.label}
+                        </span>
+                        <span className="text-slate-500 text-xs mt-0.5">{item.desc}</span>
+                      </Link>
+                    ))}
+                  </div>
+                  <div className="border-t border-slate-800 px-4 py-3">
+                    <Link
+                      href="/#pricing"
+                      className="text-cyan-400 hover:text-cyan-300 text-xs font-medium transition-colors"
+                    >
+                      Alle pakketten en prijzen →
+                    </Link>
+                  </div>
+                </div>
+                </div>
+              )}
+            </div>
+
+            <a href="/#pricing" className="text-slate-300 hover:text-cyan-400 transition-colors duration-200 text-sm font-medium">
               Pakketten
             </a>
-            <a href="#solutions" className="text-slate-300 hover:text-cyan-400 transition-colors duration-200 text-sm font-medium">
+            <a href="/#solutions" className="text-slate-300 hover:text-cyan-400 transition-colors duration-200 text-sm font-medium">
               Oplossingen
             </a>
-            <a href="#about" className="text-slate-300 hover:text-cyan-400 transition-colors duration-200 text-sm font-medium">
+            <a href="/#about" className="text-slate-300 hover:text-cyan-400 transition-colors duration-200 text-sm font-medium">
               Over ons
             </a>
-            <a href="#partners" className="text-slate-300 hover:text-cyan-400 transition-colors duration-200 text-sm font-medium">
+            <a href="/#partners" className="text-slate-300 hover:text-cyan-400 transition-colors duration-200 text-sm font-medium">
               Partners
             </a>
           </div>
@@ -44,13 +108,13 @@ export default function Header() {
           {/* CTA Buttons */}
           <div className="hidden md:flex items-center gap-4">
             <a
-              href="#contact"
+              href="/#contact"
               className="px-5 py-2.5 text-sm font-medium text-slate-300 hover:text-white transition-colors duration-200"
             >
               Contact
             </a>
             <a
-              href="#cta"
+              href="/#cta"
               className="px-6 py-2.5 bg-gradient-to-r from-rose-500 to-red-600 text-white rounded-lg text-sm font-semibold hover:from-rose-400 to-red-500 transition-all duration-300 shadow-lg shadow-cyan-500/25 hover:shadow-cyan-500/40 hover:scale-105"
             >
               Start nu
@@ -75,28 +139,62 @@ export default function Header() {
 
         {/* Mobile Menu */}
         {mobileMenuOpen && (
-          <div className="md:hidden pb-6 space-y-4 animate-fadeIn">
-            <a href="#pricing" className="block text-slate-300 hover:text-cyan-400 transition-colors py-2">
-              Pakketten
-            </a>
-            <a href="#solutions" className="block text-slate-300 hover:text-cyan-400 transition-colors py-2">
-              Oplossingen
-            </a>
-            <a href="#about" className="block text-slate-300 hover:text-cyan-400 transition-colors py-2">
-              Over ons
-            </a>
-            <a href="#partners" className="block text-slate-300 hover:text-cyan-400 transition-colors py-2">
-              Partners
-            </a>
-            <a href="#contact" className="block text-slate-300 hover:text-cyan-400 transition-colors py-2">
-              Contact
-            </a>
-            <a
-              href="#cta"
-              className="block text-center px-6 py-3 bg-gradient-to-r from-cyan-500 to-blue-600 text-white rounded-lg font-semibold"
-            >
-              Start nu
-            </a>
+          <div className="md:hidden pb-6 animate-fadeIn">
+            {/* Diensten sectie mobiel */}
+            <div className="border-b border-slate-800 pb-4 mb-4">
+              <button
+                onClick={() => setDienstenOpen(!dienstenOpen)}
+                className="flex items-center justify-between w-full text-slate-300 hover:text-cyan-400 transition-colors py-2 font-medium"
+              >
+                Diensten
+                <svg
+                  className={`w-4 h-4 transition-transform ${dienstenOpen ? 'rotate-180' : ''}`}
+                  fill="none"
+                  viewBox="0 0 24 24"
+                  stroke="currentColor"
+                >
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
+                </svg>
+              </button>
+              {dienstenOpen && (
+                <div className="mt-2 pl-4 space-y-1">
+                  {diensten.map((item) => (
+                    <Link
+                      key={item.href}
+                      href={item.href}
+                      className="block text-slate-400 hover:text-cyan-400 transition-colors py-2 text-sm"
+                      onClick={() => setMobileMenuOpen(false)}
+                    >
+                      {item.label}
+                    </Link>
+                  ))}
+                </div>
+              )}
+            </div>
+
+            <div className="space-y-4">
+              <a href="/#pricing" className="block text-slate-300 hover:text-cyan-400 transition-colors py-2">
+                Pakketten
+              </a>
+              <a href="/#solutions" className="block text-slate-300 hover:text-cyan-400 transition-colors py-2">
+                Oplossingen
+              </a>
+              <a href="/#about" className="block text-slate-300 hover:text-cyan-400 transition-colors py-2">
+                Over ons
+              </a>
+              <a href="/#partners" className="block text-slate-300 hover:text-cyan-400 transition-colors py-2">
+                Partners
+              </a>
+              <a href="/#contact" className="block text-slate-300 hover:text-cyan-400 transition-colors py-2">
+                Contact
+              </a>
+              <a
+                href="/#cta"
+                className="block text-center px-6 py-3 bg-gradient-to-r from-cyan-500 to-blue-600 text-white rounded-lg font-semibold"
+              >
+                Start nu
+              </a>
+            </div>
           </div>
         )}
       </nav>
