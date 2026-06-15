@@ -164,7 +164,7 @@ export default function CTA() {
                   value={formData.phone}
                   onChange={handleChange}
                   className="w-full px-4 py-3 bg-slate-800/50 border border-slate-700 rounded-xl text-white placeholder-slate-500 focus:outline-none focus:ring-2 focus:ring-cyan-500/50 focus:border-cyan-500/50 transition-all"
-                  placeholder="+31 6 12345678"
+                  placeholder="+31 503051535"
                 />
               </div>
 
