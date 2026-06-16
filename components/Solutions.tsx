@@ -47,8 +47,8 @@ export default function Solutions() {
         </svg>
       ),
       title: 'Helpdesk Support',
-      description: 'IT-probleem? Je krijgt een specialist die met je meekijkt en het snel oplost. Geen wachttijden, geen frustraties.',
-      features: ['Hulp binnen handbereik', 'Sneller door bij onverwachte problemen', 'Vast contactpersoon voor al je IT-vragen',  ]
+      description: 'Telefonisch of online bereikbaar. Zelf een melding maken kan altijd of wij geven je proactief een seintje zodra wij iets detecteren. Binnen 48 uur kijken we met je mee.',
+      features: ['Telefonisch & online bereikbaar', 'Proactieve melding bij detectie', 'Meekijken binnen 48 uur gegarandeerd', 'Op locatie mogelijk (aanvullende kosten)']
     },
     // {
     //   icon: (

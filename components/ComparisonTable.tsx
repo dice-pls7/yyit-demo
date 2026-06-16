@@ -25,7 +25,7 @@ function TooltipIcon({ text }: { text: string }) {
         </svg>
       </button>
       <span
-        className={`absolute left-6 top-1/2 -translate-y-1/2 z-20 w-56 px-3 py-2 bg-slate-800 border border-slate-700 rounded-lg text-xs text-slate-300 shadow-xl pointer-events-none transition-opacity duration-150 opacity-0 group-hover:opacity-100${open ? ' !opacity-100' : ''}`}
+        className={`absolute left-6 top-1/2 -translate-y-1/2 z-20 w-72 px-3 py-2 bg-slate-800 border border-slate-700 rounded-lg text-xs text-slate-300 shadow-xl pointer-events-none transition-opacity duration-150 opacity-0 group-hover:opacity-100${open ? ' !opacity-100' : ''}`}
       >
         {text}
       </span>
@@ -52,7 +52,7 @@ export default function ComparisonTable() {
     { name: 'Vaste accountmanager', tooltip: 'Een toegewijde contactpersoon die je helpt met al je vragen en behoeften.', starter: false, compleet: false, premium: true },
     {
       name: 'IT-support',
-      tooltip: 'De maximale tijd waarbinnen je een reactie ontvangt op je IT-vraag of melding.',
+      tooltip: 'Telefonisch of online bereikbaar. Je kunt zelf een melding maken, of wij sturen je proactief een seintje als wij iets detecteren. Binnen de aangegeven tijd kijken we met je mee. Indien nodig komen we op locatie hier zijn aanvullende kosten aan verbonden.',
       starter: '< 48 uur',
       compleet: '< 24 uur',
       premium: 'Altijd bereikbaar',
