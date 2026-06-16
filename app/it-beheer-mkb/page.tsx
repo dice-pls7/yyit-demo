@@ -219,7 +219,7 @@ export default function ITBeheerMKBPage() {
           <p className="text-slate-300 mb-8">
             YYIT toont concrete prijzen terwijl de markt vaag blijft over kosten. Kies het pakket dat bij uw bedrijf past.
           </p>
-          <div className="grid sm:grid-cols-3 gap-6 mb-8">
+          {/* <div className="grid sm:grid-cols-3 gap-6 mb-8">
             {[
               { name: 'Basis', price: '€14,95', per: 'per werkplek/maand', features: ['Monitoring', 'Updates', 'Helpdesk'] },
               { name: 'Professioneel', price: '€29,95', per: 'per werkplek/maand', features: ['Alles uit Basis', 'Beveiliging', 'Back-up', 'Prioriteit'], highlight: true },
@@ -241,7 +241,7 @@ export default function ITBeheerMKBPage() {
                 </ul>
               </div>
             ))}
-          </div>
+          </div> */}
           <a
             href="https://yyit.nl/#pricing"
             className="inline-flex items-center px-8 py-4 bg-gradient-to-r from-cyan-400 to-blue-500 text-white rounded-xl font-semibold hover:scale-105 transition-transform"
