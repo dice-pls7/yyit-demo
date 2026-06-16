@@ -119,7 +119,7 @@ export default function NIS2MKBPage() {
           </p>
           <p className="text-slate-400 mb-8 max-w-2xl">
             Boetes tot <strong className="text-white">€10 miljoen</strong> voor niet-naleving. Bestuurders persoonlijk aansprakelijk.
-            YYIT maakt u NIS2-compliant.
+            YYIT helpt u aantoonbare stappen te zetten richting NIS2-compliance.
           </p>
           <div className="flex flex-col sm:flex-row gap-4">
             <a

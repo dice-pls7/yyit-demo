@@ -19,11 +19,11 @@ export default function Hero() {
 
           {/* Main Headline */}
           <h1 className="text-5xl md:text-7xl lg:text-8xl font-bold tracking-tight text-white max-w-5xl mx-auto leading-tight">
-            IT-beheer voor bedrijven{' '}
+            Professionele beveiliging nu ook beschikbaar {' '}
             <span className="bg-gradient-to-r from-cyan-400 via-blue-500 to-cyan-400 bg-clip-text text-transparent animate-gradient">
-               die geen gedoe willen {' '}
+               voor jou{' '}
             </span>
-              met beveiliging.
+              
             
           </h1>
 
