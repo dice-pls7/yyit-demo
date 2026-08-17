@@ -1,15 +1,16 @@
 export default function Partners() {
   const partners = [
+    { name: 'Ubiquiti / Unifi', category: 'Networking' },
+    { name: 'ESET', category: 'Endpoint Protection' },
     { name: 'Microsoft', category: 'Cloud & Productivity' },
-    { name: 'AWS', category: 'Cloud Infrastructure' },
-    { name: 'Cisco', category: 'Networking' },
     { name: 'VMware', category: 'Virtualization' },
-    { name: 'Dell', category: 'Hardware' },
-    { name: 'HP Enterprise', category: 'Enterprise Solutions' },
+    { name: 'HP', category: 'Hardware & Enterprise' },
     { name: 'Fortinet', category: 'Security' },
-    { name: 'Sophos', category: 'Endpoint Protection' },
+    { name: 'Veeam', category: 'Backup & Recovery' },
+
   ];
 
+  /* testimonials tijdelijk uitgeschakeld
   const testimonials = [
     {
       quote: "YYIT heeft onze volledige IT-infrastructuur getransformeerd. Hun proactieve aanpak heeft ons niet alleen geld bespaard, maar ook veel zorgen uit handen genomen.",
@@ -30,6 +31,7 @@ export default function Partners() {
       company: "Innovate Solutions"
     }
   ];
+  */
 
   return (
     <section id="partners" className="relative py-24 bg-slate-950 overflow-hidden">
@@ -70,8 +72,8 @@ export default function Partners() {
           ))}
         </div>
 
-        {/* Testimonials Section */}
-        <div className="space-y-8 mb-16">
+        {/* Testimonials Section — tijdelijk uitgeschakeld */}
+        {/* <div className="space-y-8 mb-16">
           <div className="text-center">
             <h3 className="text-3xl md:text-4xl font-bold text-white mb-4">
               Wat onze klanten zeggen
@@ -88,17 +90,12 @@ export default function Partners() {
                 className="bg-gradient-to-br from-slate-900/80 to-slate-800/80 backdrop-blur-sm border border-slate-700/50 rounded-2xl p-8 hover:border-cyan-500/30 transition-all duration-300 hover:scale-105 animate-fadeInUp"
                 style={{ animationDelay: `${index * 150}ms` }}
               >
-                {/* Quote Icon */}
                 <svg className="w-10 h-10 text-cyan-500/30 mb-4" fill="currentColor" viewBox="0 0 24 24">
                   <path d="M14.017 21v-7.391c0-5.704 3.731-9.57 8.983-10.609l.995 2.151c-2.432.917-3.995 3.638-3.995 5.849h4v10h-9.983zm-14.017 0v-7.391c0-5.704 3.748-9.57 9-10.609l.996 2.151c-2.433.917-3.996 3.638-3.996 5.849h3.983v10h-9.983z" />
                 </svg>
-
-                {/* Quote */}
                 <p className="text-slate-300 leading-relaxed mb-6 italic">
                   "{testimonial.quote}"
                 </p>
-
-                {/* Author */}
                 <div className="border-t border-slate-700 pt-4">
                   <div className="font-semibold text-white">{testimonial.author}</div>
                   <div className="text-sm text-slate-400">
@@ -108,10 +105,10 @@ export default function Partners() {
               </div>
             ))}
           </div>
-        </div>
+        </div> */}
 
-        {/* Trust Badge */}
-        <div className="bg-gradient-to-r from-cyan-500/10 to-blue-600/10 border border-cyan-500/20 rounded-2xl p-8 text-center animate-fadeInUp">
+        {/* Trust Badge — tijdelijk uitgeschakeld */}
+        {/* <div className="bg-gradient-to-r from-cyan-500/10 to-blue-600/10 border border-cyan-500/20 rounded-2xl p-8 text-center animate-fadeInUp">
           <div className="flex flex-col md:flex-row items-center justify-center gap-8">
             <div className="flex items-center gap-3">
               <svg className="w-8 h-8 text-cyan-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -143,7 +140,7 @@ export default function Partners() {
               </div>
             </div>
           </div>
-        </div>
+        </div> */}
       </div>
     </section>
   );
